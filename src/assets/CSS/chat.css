@@ -1,0 +1,16 @@
+.main-container {
+  height: calc(100vh - 71.78px);
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+.main-container .contact {
+  /* flex: 1; */
+  width: 300px;
+}
+.main-container .chat {
+width: calc(100% - 300px);
+}
+@media (max-width:768px) {
+  
+}
