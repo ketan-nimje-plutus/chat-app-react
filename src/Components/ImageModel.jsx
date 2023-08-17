@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import "../../src/assets/CSS/ImageModel.css";
+import "../../src/assets/CSS/imageModel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCircleDown } from "@fortawesome/free-solid-svg-icons";
 import { saveAs } from "file-saver";
