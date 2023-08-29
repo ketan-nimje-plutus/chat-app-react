@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postdata } from "../../Utils/http.class";
 import jwtDecode from "jwt-decode";
+import { socket } from "../../socket";
 
 let token = localStorage.getItem("user") ? localStorage.getItem("user") : null;
 let user = null;
@@ -23,6 +24,7 @@ export const loginUser = createAsyncThunk("user/login", async (data) => {
   const response = await res.json();
   return response;
 });
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -39,8 +41,10 @@ const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       if (action.payload.status == 1) {
+
         localStorage.setItem("user", action.payload.token);
         const data = jwtDecode(action.payload.token);
+        socket.emit("login", data.id);
         state.user.id = data.id;
         state.user.email = data.email;
         state.user.name = data.name;

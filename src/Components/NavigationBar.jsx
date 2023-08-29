@@ -20,7 +20,7 @@ function NavigationBar() {
   };
 
   return (
-    <Navbar  className="px-4 w-100 navbar">
+    <Navbar className="px-4 w-100 navbar">
       <Container fluid>
         <Link to="/chat">
           {" "}
@@ -43,7 +43,6 @@ function NavigationBar() {
           <>
             <nav>
               <Dropdown className="dropdown">
-                
                 <Dropdown.Toggle id="dropdown-basic">
                   <img
                     src={noDP}
@@ -66,7 +65,7 @@ function NavigationBar() {
               </Dropdown>
             </nav>
           </>
-        )}  
+        )}
       </Container>
     </Navbar>
   );

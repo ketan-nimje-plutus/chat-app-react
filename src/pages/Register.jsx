@@ -9,6 +9,7 @@ import login from "../../public/login.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
+
 function Register() {
   const navigate = useNavigate();
   const { values, handleChange, handleSubmit } = useFormik({

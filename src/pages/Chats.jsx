@@ -20,10 +20,10 @@ function Chats() {
   const [contact, setContact] = useState();
 
   const { isLoggin, user } = useSelector((state) => state.auth);
+  console.log("user", user);
 
   if (!isLoggin) {
     console.log("not login");
-    // navigate("/login");
     return <Navigate to="/login" />;
   }
 

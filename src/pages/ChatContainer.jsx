@@ -14,6 +14,7 @@ import pdf from "../../public/pdf.png";
 import docx from "../../public/docx.png";
 
 function ChatContainer({ currentChat, currentUser }) {
+  
   const [message, setMessage] = useState([]);
   const [getMsg, setGetMsg] = useState();
   const [data, setData] = useState(5);
@@ -25,7 +26,9 @@ function ChatContainer({ currentChat, currentUser }) {
 
   const msgBox = document.getElementById("scrollTop");
 
+  console.log("socket.connected", socket.connected);
   console.log("message", message);
+
   //handle msg(database,socket,and frontend)
   const handleSendChat = async (msg, type) => {
     console.log("send chat called", type);
@@ -42,6 +45,7 @@ function ChatContainer({ currentChat, currentUser }) {
     socket.emit("send-msg", {
       from: currentUser?.id,
       to: currentChat?._id,
+      socketid: currentChat?.socketid,
       message: msg,
       msg_type: type,
     });
@@ -52,6 +56,7 @@ function ChatContainer({ currentChat, currentUser }) {
   //handle Image
   const handleSendImage = async (file, type) => {
     console.log("send image called", type);
+
     const data = new FormData();
     data.append("image", file);
     data.append("from", currentUser.id);
@@ -62,7 +67,7 @@ function ChatContainer({ currentChat, currentUser }) {
 
     console.log("resssssss", res.data);
 
-    if (res.status == 400) {  
+    if (res.status == 400) {
       errorToast(res.error);
     }
 
@@ -92,7 +97,7 @@ function ChatContainer({ currentChat, currentUser }) {
   //change message status seen or unseen
   const changeStatus = async () => {
     const data = {
-      to: user?.id,
+      to: currentUser?.id,
       from: currentChat?._id,
     };
     const res = await postdata("message/changeStatus", data);
@@ -116,7 +121,6 @@ function ChatContainer({ currentChat, currentUser }) {
   useEffect(() => {
     if (socket) {
       socket.on("msg-recieve", (data) => {
-        console.log("data recieve", data);
         if (data.to === currentChat._id) {
           if (data.message) {
             setGetMsg({
@@ -158,6 +162,7 @@ function ChatContainer({ currentChat, currentUser }) {
 
   console.log("...", showImg);
   console.log("data", data);
+
   return (
     <>
       {/* <ToastContainer /> */}
@@ -201,7 +206,6 @@ function ChatContainer({ currentChat, currentUser }) {
                     (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
                       <img
                         src={`http://localhost:2000/public/${data.attechment}`}
-
                         style={{
                           height: "200px",
                           width: "200px",
@@ -211,7 +215,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           setShowImg(true);
                           setImg(data.attechment);
                         }}
-                      ></img>
+                      />
                     ) : data.attechment && ext == "mp4" ? (
                       <img
                         src={video}
@@ -224,7 +228,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           setShowImg(true);
                           setImg(data.attechment);
                         }}
-                      ></img>
+                      />
                     ) : data.attechment && ext == "docx" ? (
                       <img
                         src={docx}
@@ -237,8 +241,8 @@ function ChatContainer({ currentChat, currentUser }) {
                           setShowImg(true);
                           setImg(data.attechment);
                         }}
-                      ></img>
-                    )  : (
+                      />
+                    ) : (
                       <img
                         src={pdf}
                         style={{
@@ -250,7 +254,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           setShowImg(true);
                           setImg(data.attechment);
                         }}
-                      ></img>
+                      />
                     ))}
 
                   <span className="time">

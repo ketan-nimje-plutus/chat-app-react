@@ -8,6 +8,7 @@ import { postdata } from "../Utils/http.class";
 import { errorToast } from "../Components/Toast";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+let userList = [];
 function Contact({ handleCurrentChat, contact, currentUser }) {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
@@ -15,16 +16,26 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
   const { user } = useSelector((state) => state.auth);
   const [currentChat, setCurrentChat] = useState();
   const [notification, setNotification] = useState([]);
-  const userList = contact?.filter((data) => data._id !== user.id);
+  userList = contact?.filter((data) => data._id !== currentUser.id);
   const [searchLoader, setSearchLoader] = useState(false);
+
   //online user
+
   useEffect(() => {
     if (socket) {
       socket.on("online-user", (data) => {
+        console.log("online-user", data);
+        data.forEach((element) => {
+          let index = userList.findIndex((item) => item._id == element.userID);
+          if (index >= 0) {
+            userList[index].socketid = data.socketId;
+          }
+        });
         setOnlineUser(data);
       });
     }
-  }, [socket]);
+    console.log("socket");
+  }, [socket, userList]);
 
   //fileter message notification
   const userNotification = (user) => {
@@ -44,7 +55,7 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
   //get unseen message
   const viewMessage = async () => {
     const data = {
-      to: user.id,
+      to: currentUser.id,
     };
     const res = await postdata("message/isViewMessage", data);
     const response = await res.json();
@@ -55,10 +66,10 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
   };
 
   //change status of message seen or unseen
-  const changeStatus = async (contact) => {
+  const changeStatus = async () => {
     const data = {
-      to: user.id,
-      from: currentChat._id,
+      to: currentUser.id,
+      from: currentChat?._id,
     };
 
     const res = await postdata("message/changeStatus", data);
@@ -88,11 +99,17 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
 
   useEffect(() => {
     viewMessage();
-  });
+  }, []);
 
   useEffect(() => {
     searchUser();
   }, [search]);
+
+  useEffect(() => {
+    socket.on("msg-notification", () => {
+      viewMessage();
+    });
+  }, []);
 
   return (
     <>
@@ -114,7 +131,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
             <div style={{ height: "4px" }}></div>
           )}
         </div>
-
         <div className="favourite-container">
           <div className="favourite">Favourite</div>
           <div
@@ -134,7 +150,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
             </div>
             <div className="contact-name">AI</div>
           </div>
-
           <div
             className={
               currentChat === "AI_Image"

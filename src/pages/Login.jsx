@@ -29,7 +29,7 @@ function Login() {
       errorToast(errorMsg);
     }
   }, [errorMsg]);
-
+  
   if (isLoggin) {
     navigate("/chat");
   }
@@ -68,7 +68,6 @@ function Login() {
                     />
                   </div>
                 </div>
-
                 <div className="input-submit">
                   <input className="submit-button" type="Submit"></input>
                 </div>
