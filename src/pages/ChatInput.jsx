@@ -2,7 +2,7 @@ import Picker from "emoji-picker-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceSmile, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import "../assets/CSS/chat-input.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { errorToast } from "../Components/Toast";
 
@@ -14,26 +14,47 @@ function ChatInput({ handleSendChat, handleSendImage }) {
   const [type, setType] = useState("");
 
   const { getInputProps, getRootProps, fileRejections } = useDropzone({
-    onDrop: (acceptFile) => {
+    accept: {
+      "image/jpeg": [".jpg", ".jpeg"],
+      "image/png": [".png"],
+      "text/html": [".html", ".htm"],
+      "application/pdf": [".pdf"],
+      "video/mp4": [".mp4"],
+      "video/mpeg": [".mpeg"],
+      "audio/mpeg": [".mp3"],
+      "application/vnd.ms-powerpoint": [".ppt"],
+      "image/svg+xml": [".svg"],
+      "text/plain": [".txt"],
+      "application/zip": [".zip"],
+      "text/csv": [".csv"],
+      "application/msword": [".doc"],
+    },
+
+    onDrop: async (acceptFile) => {
       console.log("acceptFile", acceptFile[0]);
-      validation(acceptFile[0]);
-      setAttechment(
-        Object.assign(acceptFile, {
-          preview: URL.createObjectURL(acceptFile[0]),
-        })
-      );
-      setTimeout(() => {
-        sendChat();
-      }, 200);
+      if (validation(acceptFile[0])) {
+        setAttechment(
+          Object.assign(acceptFile, {
+            preview: URL.createObjectURL(acceptFile[0]),
+          })
+        );
+      } else {
+        debugger;
+      }
     },
   });
+  useEffect(() => {
+    if (attechment) {
+      sendChat();
+    }
+  }, [attechment]);
   const validation = (file) => {
     console.log("fileeeee type...", file.type);
     if (file.size > 5 * 1024 * 1024) {
       errorToast("invalid size lenth");
       setAttechment(null);
       setSelected(false);
-      return;
+      return false;
     }
     if (
       file.type != "image/jpeg" &&
@@ -49,13 +70,12 @@ function ChatInput({ handleSendChat, handleSendImage }) {
       errorToast("invalid type !!!");
       setAttechment(null);
       setSelected(false);
-
-      return;
+      return false;
     }
     setSelected(true);
     setType(file.type);
+    return true;
   };
-  console.log("typeeeeeee", type);
 
   const setEmoji = (emoji, event) => {
     let message = msg;
@@ -73,6 +93,7 @@ function ChatInput({ handleSendChat, handleSendImage }) {
     setMsg("");
     setSelected(false);
     setShowEmoji(false);
+    setType(null);
   };
 
   return (

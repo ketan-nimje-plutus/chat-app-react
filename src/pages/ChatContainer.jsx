@@ -193,7 +193,7 @@ function ChatContainer({ currentChat, currentUser }) {
           ) : (
             message &&
             message.slice(-data).map((data, index) => {
-              const ext = data.attechment?.split(".")[1];
+              const ext = data.attechment?.split(".").pop();
               return (
                 <div
                   key={index}
@@ -209,7 +209,6 @@ function ChatContainer({ currentChat, currentUser }) {
                       <br></br>
                     </p>
                   )}
-
                   {data.attechment &&
                     (data.attechment &&
                     (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
