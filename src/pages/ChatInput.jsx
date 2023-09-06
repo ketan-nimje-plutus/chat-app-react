@@ -22,7 +22,9 @@ function ChatInput({ handleSendChat, handleSendImage }) {
           preview: URL.createObjectURL(acceptFile[0]),
         })
       );
-      sendChat();
+      setTimeout(() => {
+        sendChat();
+      }, 200);
     },
   });
   const validation = (file) => {
