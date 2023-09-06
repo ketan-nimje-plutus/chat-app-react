@@ -14,7 +14,6 @@ import pdf from "../../public/pdf.png";
 import docx from "../../public/docx.png";
 
 function ChatContainer({ currentChat, currentUser }) {
-  
   const [message, setMessage] = useState([]);
   const [getMsg, setGetMsg] = useState();
   const [data, setData] = useState(5);
@@ -64,9 +63,7 @@ function ChatContainer({ currentChat, currentUser }) {
     data.append("msg_type", type);
     const response = await postimage("message/sendImage", data);
     const res = await response.json();
-
     console.log("resssssss", res.data);
-
     if (res.status == 400) {
       errorToast(res.error);
     }
@@ -94,6 +91,7 @@ function ChatContainer({ currentChat, currentUser }) {
     setMessage(res.message);
     setLoadding(false);
   };
+
   //change message status seen or unseen
   const changeStatus = async () => {
     const data = {
@@ -102,6 +100,7 @@ function ChatContainer({ currentChat, currentUser }) {
     };
     const res = await postdata("message/changeStatus", data);
   };
+
   const viewMore = async () => {
     setData(data + 5);
   };
@@ -111,6 +110,7 @@ function ChatContainer({ currentChat, currentUser }) {
       viewMore();
     }
   };
+
   useEffect(() => {
     msgBox?.addEventListener("scroll", handleScroll);
     return () => {
