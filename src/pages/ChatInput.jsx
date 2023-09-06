@@ -17,18 +17,12 @@ function ChatInput({ handleSendChat, handleSendImage }) {
     onDrop: (acceptFile) => {
       console.log("acceptFile", acceptFile[0]);
       validation(acceptFile[0]);
-      handleSendImage(
-        Object.assign(acceptFile, {
-          preview: URL.createObjectURL(acceptFile[0]),
-        }),
-        acceptFile[0] && acceptFile[0].type
-      );
-
       setAttechment(
         Object.assign(acceptFile, {
           preview: URL.createObjectURL(acceptFile[0]),
         })
       );
+      sendChat();
     },
   });
   const validation = (file) => {
@@ -46,12 +40,14 @@ function ChatInput({ handleSendChat, handleSendImage }) {
       file.type != "application/pdf" &&
       file.type != "text/html" &&
       file.type != "text/plain" &&
-      file.type != "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
+      file.type !=
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
       file.type != "video/mp4"
     ) {
       errorToast("invalid type !!!");
       setAttechment(null);
       setSelected(false);
+
       return;
     }
     setSelected(true);

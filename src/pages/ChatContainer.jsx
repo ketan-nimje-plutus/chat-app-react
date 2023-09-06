@@ -52,9 +52,8 @@ function ChatContainer({ currentChat, currentUser }) {
     info.push({ fromSelf: true, message: msg, msg_type: type });
     setMessage(info);
   };
-  //handle Image
+  //handle ImagehandleSendImage
   const handleSendImage = async (file, type) => {
-    debugger;
     console.log("send image called", type);
 
     const data = new FormData();
