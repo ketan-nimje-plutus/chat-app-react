@@ -162,7 +162,16 @@ function ChatContainer({ currentChat, currentUser }) {
 
   console.log("...", showImg);
   console.log("data", data);
-
+  const handleDownload = (Img) => {
+    let URL;
+    if (chatGptImg) {
+      URL = Img;
+      saveAs(URL, "image.png");
+    } else {
+      URL = `https://chat-app-backend-2qte.onrender.com/public/${Img}`;
+      saveAs(URL, Img);
+    }
+  };
   return (
     <>
       {/* <ToastContainer /> */}
@@ -212,8 +221,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
-                          setShowImg(true);
-                          setImg(data.attechment);
+                          handleDownload(data.attechment);
                         }}
                       />
                     ) : data.attechment && ext == "mp4" ? (
@@ -225,8 +233,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
-                          setShowImg(true);
-                          setImg(data.attechment);
+                          handleDownload(data.attechment);
                         }}
                       />
                     ) : data.attechment && ext == "docx" ? (
@@ -238,8 +245,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
-                          setShowImg(true);
-                          setImg(data.attechment);
+                          handleDownload(data.attechment);
                         }}
                       />
                     ) : (
@@ -251,8 +257,7 @@ function ChatContainer({ currentChat, currentUser }) {
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
-                          setShowImg(true);
-                          setImg(data.attechment);
+                          handleDownload(data.attechment);
                         }}
                       />
                     ))}

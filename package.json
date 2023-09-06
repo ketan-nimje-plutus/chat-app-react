@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://leena-chat-app.netlify.app/",
+  "homepage": "https://chat-app-ketan.netlify.app/",
   "scripts": {
     "dev": "vite --port 8000",
     "build": "vite build",
