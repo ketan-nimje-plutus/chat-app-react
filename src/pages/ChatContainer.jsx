@@ -214,7 +214,7 @@ function ChatContainer({ currentChat, currentUser }) {
                     (data.attechment &&
                     (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
                       <img
-                        src={`http://localhost:2000/public/${data.attechment}`}
+                        src={`https://chat-app-backend-2qte.onrender.com/public/${data.attechment}`}
                         style={{
                           height: "200px",
                           width: "200px",

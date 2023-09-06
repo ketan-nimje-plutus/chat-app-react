@@ -17,6 +17,13 @@ function ChatInput({ handleSendChat, handleSendImage }) {
     onDrop: (acceptFile) => {
       console.log("acceptFile", acceptFile[0]);
       validation(acceptFile[0]);
+      handleSendImage(
+        Object.assign(acceptFile, {
+          preview: URL.createObjectURL(acceptFile[0]),
+        }),
+        acceptFile[0] && acceptFile[0].type
+      );
+
       setAttechment(
         Object.assign(acceptFile, {
           preview: URL.createObjectURL(acceptFile[0]),
@@ -53,7 +60,7 @@ function ChatInput({ handleSendChat, handleSendImage }) {
     setType(file.type);
   };
   console.log("typeeeeeee", type);
-  
+
   const setEmoji = (emoji, event) => {
     let message = msg;
     message = msg + emoji.emoji;
