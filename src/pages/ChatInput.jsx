@@ -46,14 +46,12 @@ function ChatInput({ handleSendChat, handleSendImage }) {
       file.type != "application/pdf" &&
       file.type != "text/html" &&
       file.type != "text/plain" &&
-      file.type !=
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
+      file.type != "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
       file.type != "video/mp4"
     ) {
       errorToast("invalid type !!!");
       setAttechment(null);
       setSelected(false);
-
       return;
     }
     setSelected(true);

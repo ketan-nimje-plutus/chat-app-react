@@ -54,6 +54,7 @@ function ChatContainer({ currentChat, currentUser }) {
   };
   //handle Image
   const handleSendImage = async (file, type) => {
+    debugger;
     console.log("send image called", type);
 
     const data = new FormData();
