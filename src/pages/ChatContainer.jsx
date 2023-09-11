@@ -11,7 +11,10 @@ import Loader from "../Components/Loader";
 import ImageModel from "../Components/ImageModel";
 import video from "../../public/video.jpg";
 import pdf from "../../public/pdf.png";
-import docx from "../../public/docx.png";
+import ppt from "../../public/ppt.png";
+import zip from "../../public/zip.png";
+import doc from "../../public/doc.png";
+import xls from "../../public/xls.png";
 
 function ChatContainer({ currentChat, currentUser }) {
   const [message, setMessage] = useState([]);
@@ -235,9 +238,45 @@ function ChatContainer({ currentChat, currentUser }) {
                           handleDownload(data.attechment);
                         }}
                       />
-                    ) : data.attechment && ext == "docx" ? (
+                    ) : data.attechment && ext == "ppt" ? (
                       <img
-                        src={docx}
+                        src={ppt}
+                        style={{
+                          height: "120px",
+                          width: "200px",
+                          border: "2px solid #d9d9d9",
+                        }}
+                        onClick={() => {
+                          handleDownload(data.attechment);
+                        }}
+                      />
+                    ) : data.attechment && ext == "zip" ? (
+                      <img
+                        src={zip}
+                        style={{
+                          height: "120px",
+                          width: "200px",
+                          border: "2px solid #d9d9d9",
+                        }}
+                        onClick={() => {
+                          handleDownload(data.attechment);
+                        }}
+                      />
+                    ) : data.attechment && (ext == "xls" || ext == "xlsx") ? (
+                      <img
+                        src={xls}
+                        style={{
+                          height: "120px",
+                          width: "200px",
+                          border: "2px solid #d9d9d9",
+                        }}
+                        onClick={() => {
+                          handleDownload(data.attechment);
+                        }}
+                      />
+                    ) : data.attechment && (ext == "docx" || ext == "doc") ? (
+                      <img
+                        src={doc}
                         style={{
                           height: "120px",
                           width: "200px",
