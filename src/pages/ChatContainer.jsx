@@ -243,7 +243,7 @@ function ChatContainer({ currentChat, currentUser }) {
                         src={ppt}
                         style={{
                           height: "120px",
-                          width: "200px",
+                          width: "120px",
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
@@ -255,7 +255,7 @@ function ChatContainer({ currentChat, currentUser }) {
                         src={zip}
                         style={{
                           height: "120px",
-                          width: "200px",
+                          width: "120px",
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
@@ -267,7 +267,7 @@ function ChatContainer({ currentChat, currentUser }) {
                         src={xls}
                         style={{
                           height: "120px",
-                          width: "200px",
+                          width: "120px",
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
@@ -291,7 +291,7 @@ function ChatContainer({ currentChat, currentUser }) {
                         src={pdf}
                         style={{
                           height: "120px",
-                          width: "200px",
+                          width: "120px",
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
