@@ -28,6 +28,8 @@ function ChatInput({ handleSendChat, handleSendImage }) {
       "application/zip": [".zip"],
       "text/csv": [".csv"],
       "application/msword": [".doc"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [".docs"],
     },
 
     onDrop: async (acceptFile) => {
@@ -38,8 +40,6 @@ function ChatInput({ handleSendChat, handleSendImage }) {
             preview: URL.createObjectURL(acceptFile[0]),
           })
         );
-      } else {
-        debugger;
       }
     },
   });
@@ -63,6 +63,8 @@ function ChatInput({ handleSendChat, handleSendImage }) {
       file.type != "application/pdf" &&
       file.type != "text/html" &&
       file.type != "text/plain" &&
+      file.type != "application/x-zip-compressed" &&
+      file.type != "application/zip" &&
       file.type !=
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
       file.type != "video/mp4"
