@@ -279,7 +279,7 @@ function ChatContainer({ currentChat, currentUser }) {
                         src={doc}
                         style={{
                           height: "120px",
-                          width: "200px",
+                          width: "120px",
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
