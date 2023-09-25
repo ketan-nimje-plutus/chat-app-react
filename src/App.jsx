@@ -7,6 +7,8 @@ import NavigationBar from "./Components/NavigationBar";
 import Home from "./pages/Home";
 import { ToastContainer, toast } from "react-toastify";
 import "./index.css";
+import ChatContainer from "./pages/ChatContainer";
+import AskPlutus from "./pages/AskPlutus";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +24,7 @@ function App() {
               <Route path="/chat" element={<Chats />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/ask-plutus" element={<AskPlutus/>} />
             </Routes>
           </div>
         </div>

@@ -21,7 +21,7 @@
 }
 .contact-conainer .wrapper .contact-img .img {
   margin: 0px 10px;
-  height: 50px;
+  height: 42px;
   width: 50px;
   border-radius: 50px;
   cursor: pointer;
@@ -37,6 +37,7 @@
 }
 .contact-conainer .wrapper .contact-name {
   font-size: 18px;
+  color: #ff6c37 !important;
   text-transform: capitalize;
   word-wrap: break-word;
   text-wrap: wrap;
@@ -90,7 +91,7 @@
 /* welcome page */
 
 .welcome {
-  width: "100%";
+  width: 100% !important;
   height: calc(100% - 72px);
   display: flex;
   justify-content: center;

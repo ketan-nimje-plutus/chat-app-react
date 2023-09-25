@@ -34,7 +34,7 @@
   right: 10px;
   top: 10%;
   /* transform: translateY(-50%); */
-  color: #5793ce !important;
+  color: #ff6c37 !important;
 }
 
 .btn-send {
@@ -55,5 +55,5 @@
   font-size: 20px;
 }
 .icons path {
-  fill: #5793ce !important;
+  fill: #ff6c37 !important;
 }

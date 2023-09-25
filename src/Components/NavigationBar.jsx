@@ -6,7 +6,9 @@ import { logoutUser } from "../redux/feature/authSlice";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../socket";
 import logo from "../../public/logo.png";
-import noDP from "../../public/noDP.jpg";
+// import logo from "https://web.plutustec.com/image/Plutus-logo.png";
+// import noDP from "../../public/noDP.jpg";
+import noDP from "../../public/User-image.png";
 import "../../src/assets/CSS/navigationbar.css";
 
 function NavigationBar() {
@@ -24,7 +26,7 @@ function NavigationBar() {
       <Container fluid>
         <Link to="/chat">
           {" "}
-          <img src={logo} width="100"></img>
+          <img src="https://web.plutustec.com/image/Plutus-logo.png" width="100" ></img>
         </Link>
         {!isLoggin ? (
           <>

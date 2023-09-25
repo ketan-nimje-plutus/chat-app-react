@@ -15,7 +15,7 @@ function ImageModel({ Img, setShowImg, chatGptImg }) {
       URL = Img;
       saveAs(URL, "image.png");
     } else {
-      URL = `https://chat-app-backend-2qte.onrender.com/public/${Img}`;
+      URL = `http://localhost:9090/public/${Img}`;
       saveAs(URL, Img);
     }
   };
@@ -36,14 +36,14 @@ function ImageModel({ Img, setShowImg, chatGptImg }) {
           ) : ext && ext == "mp4" ? (
             <video width="95%" height="auto" controls="controls">
               <source
-                src={`https://chat-app-backend-2qte.onrender.com/public/${Img}`}
+                src={`http://localhost:9090/public/${Img}`}
                 type="video/mp4"
               />
             </video>
           ) : ext == "pdf" ? (
             <>
               <iframe
-                src={`https://chat-app-backend-2qte.onrender.com/public/${Img}`}
+                src={`http://localhost:9090/public/${Img}`}
                 width="95%"
                 height="600px"
               ></iframe>
@@ -53,7 +53,7 @@ function ImageModel({ Img, setShowImg, chatGptImg }) {
               <>
                 <iframe
                   // src={`http://docs.google.com/gview?url=https://chat-app-backend-2qte.onrender.com/public/${Img}&embedded=true`}
-                  src={`http://docs.google.com/gview?url=https://chat-app-backend-code.onrender.com/public/${Img}`}
+                  src={`http://docs.google.com/gview?url=https://http://localhost:9090/public/${Img}`}
                   width="95%"
                   height="600px"
                 ></iframe>
@@ -62,7 +62,7 @@ function ImageModel({ Img, setShowImg, chatGptImg }) {
           ) : (
             <img
               className="image"
-              src={`https://chat-app-backend-2qte.onrender.com/public/${Img}`}
+              src={`http://localhost:9090/public/${Img}`}
               height="auto"
               width="95%"
               alt="Modal;"

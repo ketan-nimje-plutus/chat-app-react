@@ -12,17 +12,47 @@ if (token) {
 let initialState = {
   user: {
     id: user?.id ? user.id : null,
+    fullName: user?.fullName ? user.fullName : null,
     email: user?.email ? user.email : null,
-    name: user?.name ? user.name : null,
+    contactNumber: user?.contactNumber ? user.contactNumber : null,
   },
   isLoggin: user ? true : false,
   errorMsg: null,
 };
 
 export const loginUser = createAsyncThunk("user/login", async (data) => {
-  const res = await postdata("user/login", data);
-  const response = await res.json();
-  return response;
+  try {
+    const res = await postdata("user/login", data);
+    const response = await res.json();
+    console.log(response,'responseresponse');
+    
+    if (response.status === 1) {
+      localStorage.setItem("user", response.token);
+      const userData = jwtDecode(response.token);
+      socket.emit("login", userData.id);
+      
+      return {
+        user: {
+          id: userData.id,
+          contactNumber: userData.contactNumber,
+          email: userData.email,
+          fullName: userData.fullName,
+        },
+        isLoggedIn: true,
+        errorMsg: null,
+      };
+    } else {
+      return {
+        errorMsg: response.message,
+        isLoggedIn: false,
+      };
+    }
+  } catch (error) {
+    return {
+      errorMsg: "Something went wrong",
+      isLoggedIn: false,
+    };
+  }
 });
 
 const authSlice = createSlice({
@@ -31,33 +61,25 @@ const authSlice = createSlice({
   reducers: {
     logoutUser: (state, action) => {
       localStorage.clear();
-      state.isLoggin = false;
+      state.isLoggedIn = false;
     },
   },
-  extraReducers: {
-    [loginUser.pending]: (state, action) => {
-      state.isLoggin = false;
-      state.errorMsg = null;
-    },
-    [loginUser.fulfilled]: (state, action) => {
-      if (action.payload.status == 1) {
-
-        localStorage.setItem("user", action.payload.token);
-        const data = jwtDecode(action.payload.token);
-        socket.emit("login", data.id);
-        state.user.id = data.id;
-        state.user.email = data.email;
-        state.user.name = data.name;
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
+        state.isLoggingIn = true;
         state.errorMsg = null;
-        state.isLoggin = true;
-      } else {
-        state.errorMsg = action.payload.message;
-      }
-    },
-    [loginUser.rejected]: (state, action) => {
-      state.isLoggin = false;
-      state.errorMsg = "something wrong";
-    },
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.isLoggedIn = action.payload.isLoggedIn;
+        state.isLoggingIn = false;
+        state.errorMsg = action.payload.errorMsg;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoggingIn = false;
+        state.errorMsg = action.payload.errorMsg;
+      });
   },
 });
 

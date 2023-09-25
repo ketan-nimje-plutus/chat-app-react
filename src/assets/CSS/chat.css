@@ -3,6 +3,10 @@
   width: 100vw;
   display: flex;
   flex-direction: row;
+    /* height: calc(100vh - 71.78px); */
+    /* width: 100%; */
+    /* display: flex; */
+    /* flex-direction: row; */
 }
 .main-container .contact {
   /* flex: 1; */
@@ -10,6 +14,7 @@
 }
 .main-container .chat {
 width: calc(100% - 300px);
+/* height: calc(100vh - 71.78px); */
 }
 @media (max-width:768px) {
   

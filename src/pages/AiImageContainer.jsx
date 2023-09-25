@@ -1,5 +1,6 @@
 import React from "react";
-import noDP from "../../public/noDP.jpg";
+// import noDP from "../../public/noDP.jpg";
+import noDP from "../../public/User-image.png";
 import { useState } from "react";
 import ChatInput from "./ChatInput";
 import "../assets/CSS/chatcontainer.css";

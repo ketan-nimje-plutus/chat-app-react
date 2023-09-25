@@ -14,22 +14,25 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggin, errorMsg } = useSelector((state) => state.auth);
+  console.log(isLoggin, 'isLoggin ');
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: {
+      fullName: "",
       email: "",
-      password: "",
+      contactNumber: "",
     },
     onSubmit: () => {
-      dispatch(loginUser(values));
+      dispatch(loginUser(values)); // Dispatch the action when the form is submitted
     },
   });
 
   useEffect(() => {
+    console.log(errorMsg,'errorMsg')
     if (errorMsg !== null) {
       errorToast(errorMsg);
     }
   }, [errorMsg]);
-  
+
   if (isLoggin) {
     navigate("/chat");
   }
@@ -48,6 +51,18 @@ function Login() {
                   <div className="input">
                     <FontAwesomeIcon icon={faUser} />
                     <input
+                      placeholder="enter Fullname"
+                      type="text"
+                      name="fullName"
+                      onChange={handleChange}
+                      value={values.fullName}
+                    />
+                  </div>
+                </div>
+                <div className="input-container">
+                  <div className="input">
+                    <FontAwesomeIcon icon={faUser} />
+                    <input
                       placeholder="enter email"
                       type="text"
                       name="email"
@@ -60,11 +75,11 @@ function Login() {
                   <div className="input">
                     <FontAwesomeIcon icon={faLock} />
                     <input
-                      placeholder="enter password"
-                      type="password"
-                      name="password"
+                      placeholder="enter contactNumber"
+                      type="text"
+                      name="contactNumber"
                       onChange={handleChange}
-                      value={values.password}
+                      value={values.contactNumber}
                     />
                   </div>
                 </div>
