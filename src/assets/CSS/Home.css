@@ -37,5 +37,5 @@
 .Button:hover{
     background-color: white !important;
     color: #ff6c37 !important;
-    border-color: #ff6c37;
+    border: 1px solid #ff6c37;
 }

@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "./index.css";
 import ChatContainer from "./pages/ChatContainer";
 import AskPlutus from "./pages/AskPlutus";
+import ShowClientinChat from "./pages/ShowClientinChat";
 function App() {
   return (
     <BrowserRouter>
@@ -25,6 +26,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
               <Route path="/ask-plutus" element={<AskPlutus/>} />
+              <Route path="/chat1" element={<ShowClientinChat/>} />
             </Routes>
           </div>
         </div>

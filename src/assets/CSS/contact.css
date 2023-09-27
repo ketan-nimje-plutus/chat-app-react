@@ -37,7 +37,7 @@
 }
 .contact-conainer .wrapper .contact-name {
   font-size: 18px;
-  color: #ff6c37 !important;
+  color: black !important;
   text-transform: capitalize;
   word-wrap: break-word;
   text-wrap: wrap;
@@ -54,7 +54,7 @@
   font-size: small;
   color: white !important;
   border-radius: 50%;
-  background-color: #5793ce;
+  background-color:  #ff6c37 ;
 }
 .contact-conainer .searchContainer {
   position: relative;

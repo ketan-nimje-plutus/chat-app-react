@@ -18,7 +18,7 @@ function NavigationBar() {
   const logout = () => {
     socket.emit("end-connection");
     dispatch(logoutUser());
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -51,9 +51,8 @@ function NavigationBar() {
                     height="30px"
                     style={{ borderRadius: "50%" }}
                   ></img>{" "}
-                  {user?.name && user.name}
+                  {user?.fullName && user.fullName}
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
                   <Dropdown.Item>profile</Dropdown.Item>
                   <Dropdown.Item

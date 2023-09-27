@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../assets/CSS/Home.css";
+import ShowClientinChat from "./ShowClientinChat";
 function Home() {
   // const notify = () => errorToast("errrrooo");
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Home() {
             <div><h3 className='title'>Welcome! How can we help?</h3></div>
             <form onSubmit={handleSubmit} className='Form'>
               <div className="InputBox">
-                <label className="lable" htmlFor="fullName">Full Name</label>
+                <label className="lable" htmlFor="fullName">Full Name:</label>
                 <input
                   type="text"
                   id="fullName"
@@ -44,7 +45,7 @@ function Home() {
                 />
               </div>
               <div className="InputBox">
-                <label className="lable" htmlFor="email">Email</label>
+                <label className="lable" htmlFor="email">Email:</label>
                 <input
                   type="email"
                   id="email"
@@ -78,12 +79,11 @@ function Home() {
                   className='InputValue'
                 />
               </div> */}
-            </form>
+          </form>
           </div>
           <Button className='Button' onClick={() => navigate("/chat")}>Start Chat</Button>
         </div>
-      </div>
-
+      </div>          
     </>
   );
 }

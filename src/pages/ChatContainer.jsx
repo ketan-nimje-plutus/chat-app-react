@@ -1,12 +1,8 @@
-import ChatInput from "./ChatInput";
-import { postdata, getdata, postimage } from "../Utils/http.class";
-import { useEffect, useRef, useState } from "react";
-import "../assets/CSS/chatcontainer.css";
-import { socket } from "../socket";
-import "react-toastify/dist/ReactToastify.css";
-import noDP from "../../public/noDP.jpg";
+import React, { useEffect, useRef, useState } from "react";
+import { postdata, postimage } from "../Utils/http.class";
 import moment from "moment";
-import { errorToast } from "../Components/Toast";
+import { socket } from "../socket";
+import noDP from "../../public/User-image.png";
 import Loader from "../Components/Loader";
 import ImageModel from "../Components/ImageModel";
 import video from "../../public/video.jpg";
@@ -15,8 +11,12 @@ import ppt from "../../public/ppt.png";
 import zip from "../../public/zip.png";
 import doc from "../../public/doc.png";
 import xls from "../../public/xls.png";
+import ChatInput from "./ChatInput";
 
-function ChatContainer({ currentChat, currentUser }) {
+let userList = [];
+
+function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
+
   const [message, setMessage] = useState([]);
   const [getMsg, setGetMsg] = useState();
   const [data, setData] = useState(5);
@@ -25,13 +25,9 @@ function ChatContainer({ currentChat, currentUser }) {
   const [Img, setImg] = useState(null);
   const scroll = useRef(null);
   const [chatGptImg, setChatGptImg] = useState(false);
-
   const msgBox = document.getElementById("scrollTop");
 
-  console.log("socket.connected", socket.connected);
-  console.log("message", message);
-
-  //handle msg(database,socket,and frontend)
+  //handle msg(database,socket,and fronte nd)
   const handleSendChat = async (msg, type) => {
     console.log("send chat called", type);
     const data = {
@@ -44,6 +40,7 @@ function ChatContainer({ currentChat, currentUser }) {
     const response = await postdata("message/sendMessage", data);
     const res = await response.json();
 
+    console.lof(res,'res')
     socket.emit("send-msg", {
       from: currentUser?.id,
       to: currentChat?._id,
@@ -58,7 +55,6 @@ function ChatContainer({ currentChat, currentUser }) {
   //handle ImagehandleSendImage
   const handleSendImage = async (file, type) => {
     console.log("send image called", type);
-
     const data = new FormData();
     data.append("image", file);
     data.append("from", currentUser.id);
@@ -91,6 +87,7 @@ function ChatContainer({ currentChat, currentUser }) {
     const response = await postdata("message/getAllMessage", data);
     const res = await response.json();
     console.log("res res", res);
+
     setMessage(res.message);
     setLoadding(false);
   };
@@ -144,11 +141,14 @@ function ChatContainer({ currentChat, currentUser }) {
       });
     }
   });
+
+
   useEffect(() => {
     {
       getMsg && setMessage([...message, getMsg]);
     }
   }, [getMsg]);
+
   useEffect(() => {
     changeStatus();
   }, [message]);
@@ -175,13 +175,14 @@ function ChatContainer({ currentChat, currentUser }) {
       saveAs(URL, Img);
     }
   };
+  console.log(message, 'gggggg')
   return (
     <>
       {/* <ToastContainer /> */}
       <div className="chat-container">
         <div className="user-container">
           <img className="profile-img" src={noDP} alt=" "></img>
-          {currentChat?.name}
+          {currentChat?.fullName}
         </div>
         <div id="scrollTop" className="messages-container" ref={scroll}>
           {/* {message.length > 10 && (
@@ -214,7 +215,7 @@ function ChatContainer({ currentChat, currentUser }) {
                   )}
                   {data.attechment &&
                     (data.attechment &&
-                    (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
+                      (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
                       <img
                         src={`https://chat-app-backend-2qte.onrender.com/public/${data.attechment}`}
                         style={{
@@ -299,7 +300,6 @@ function ChatContainer({ currentChat, currentUser }) {
                         }}
                       />
                     ))}
-
                   <span className="time">
                     {moment(
                       data.createdAt ? data.createdAt : new Date()
@@ -309,7 +309,6 @@ function ChatContainer({ currentChat, currentUser }) {
               );
             })
           )}
-
           {showImg ? (
             <ImageModel
               Img={Img}

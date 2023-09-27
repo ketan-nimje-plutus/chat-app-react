@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import noDP from "../../public/noDP.jpg";
+import noDP from "../../public/User-image.png";
 import "../assets/CSS/contact.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -8,25 +8,32 @@ import { postdata } from "../Utils/http.class";
 import { errorToast } from "../Components/Toast";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ShowClientinChat from "./ShowClientinChat";
 let userList = [];
-function Contact({ handleCurrentChat, contact, currentUser }) {
+
+function Contact({
+  handleCurrentChat,
+  contact,
+  currentUser,
+  setOnlineUser,
+  onlineUser,
+  message,
+}) {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [onlineUser, setOnlineUser] = useState([]);
   const { user } = useSelector((state) => state.auth);
   const [currentChat, setCurrentChat] = useState();
+  const [messages, setMessages] = useState([]);
   const [notification, setNotification] = useState([]);
   userList = contact?.filter((data) => data._id !== currentUser.id);
+  const UserData = JSON.parse(localStorage.getItem("userdata"));
   const [searchLoader, setSearchLoader] = useState(false);
-
-  //online user
 
   useEffect(() => {
     if (socket) {
       socket.on("online-user", (data) => {
-        console.log("online-user", data);
         data.forEach((element) => {
-          let index = userList.findIndex((item) => item._id == element.userID);
+          let index = userList?.findIndex((item) => item._id == element.userID);
           if (index >= 0) {
             userList[index].socketid = data.socketId;
           }
@@ -34,10 +41,8 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
         setOnlineUser(data);
       });
     }
-    console.log("socket");
   }, [socket, userList]);
 
-  //fileter message notification
   const userNotification = (user) => {
     let filterData;
     if (notification) {
@@ -52,7 +57,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
     return filterData;
   };
 
-  //get unseen message
   const viewMessage = async () => {
     const data = {
       to: currentUser.id,
@@ -65,7 +69,32 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
     setNotification(response.message);
   };
 
-  //change status of message seen or unseen
+  const getmessage = async (fromUser, toUser) => {
+    const data = {
+      from: fromUser._id,
+      to: toUser._id,
+    };
+    const response = await postdata("message/getAllMessage", data);
+    const res = await response.json();
+    console.log(
+      "Messages between",
+      fromUser.fullName,
+      "and",
+      toUser.fullName,
+      ":",
+      res.message
+    );
+
+    setMessages(res.message);
+    setLoadding(false);
+  };
+
+  useEffect(() => {
+    if (currentChat && currentChat.role === "BD") {
+      getmessage(currentUser, currentChat);
+    }
+  }, [currentChat]);
+
   const changeStatus = async () => {
     const data = {
       to: currentUser.id,
@@ -79,7 +108,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
     }
   };
 
-  //search user
   const searchUser = async () => {
     const data = {
       search: search,
@@ -169,68 +197,101 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
           </div>
         </div>
         <div className="favourite">Chats</div>
-        {search == ""
+
+        {search === ""
           ? userList?.map((data, index) => {
               const isOnline = onlineUser?.some(
                 (user) => user?.userID === data?._id
               );
               const userNote = userNotification(data);
-              return (
-                <div
-                  key={index}
-                  className={
-                    currentChat?.name === data.name
-                      ? "wrapper selected-contact-name "
-                      : "wrapper"
-                  }
-                  onClick={() => {
-                    handleCurrentChat(data);
-                    setCurrentChat(data);
-                  }}
-                >
-                  <div className="contact-img">
-                    <img className="img" src={noDP} alt=" " />
-                    {isOnline ? <div className="online"></div> : null}
+
+              if (UserData?.role === "BD") {
+                return (
+                  <div
+                    key={index}
+                    className={
+                      currentChat?.fullName === data.fullName
+                        ? "wrapper selected-contact-name "
+                        : "wrapper"
+                    }
+                    onClick={() => {
+                      handleCurrentChat(data);
+                      setCurrentChat(data);
+                    }}
+                  >
+                    <div className="contact-img">
+                      <img className="img" src={noDP} alt=" " />
+                      {isOnline ? <div className="online"></div> : null}
+                    </div>
+                    <div className="contact-name">{data?.fullName}</div>
+                    {currentChat?._id === data?._id ? " " : userNote.length > 0 && (
+                      <div className="notification">{userNote.length}</div>
+                    )}
                   </div>
-                  <div className="contact-name">{data?.name}</div>
-                  {currentChat?._id === data?._id
-                    ? " "
-                    : userNote.length > 0 && (
-                        <div className="notification">{userNote.length}</div>
-                      )}
-                </div>
-              );
+                );
+              } else if (UserData?.role !== "BD" && data?.role === "BD") {
+                return (
+                  <div
+                    key={index}
+                    className={
+                      currentChat?.fullName === data.fullName
+                        ? "wrapper selected-contact-name "
+                        : "wrapper"
+                    }
+                    onClick={() => {
+                      handleCurrentChat(data);
+                      setCurrentChat(data);
+                    }}
+                  >
+                    <div className="contact-img">
+                      <img className="img" src={noDP} alt=" " />
+                      {isOnline ? <div className="online"></div> : null}
+                    </div>
+                    <div className="contact-name">{data?.fullName}</div>
+                    {currentChat?._id === data?._id ? " " : userNote.length > 0 && (
+                      <div className="notification">{userNote.length}</div>
+                    )}
+                  </div>
+                );
+              } else {
+                return null;
+              }
             })
           : searchData?.map((data, index) => {
               const isOnline = onlineUser?.some(
                 (user) => user?.userID === data?._id
               );
               const userNote = userNotification(data);
-              return (
-                <div
-                  key={index}
-                  className="wrapper"
-                  onClick={() => {
-                    handleCurrentChat(data);
-                    setCurrentChat(data);
-                  }}
-                >
-                  <div className="contact-img">
-                    <img className="img" src={noDP} alt=" " />
 
-                    {isOnline ? <div className="online"></div> : null}
+              if (currentUser?.role === "BD" || data?.role === "BD") {
+                return (
+                  <div
+                    key={index}
+                    className={
+                      currentChat?.fullName === data.fullName
+                        ? "wrapper selected-contact-name "
+                        : "wrapper"
+                    }
+                    onClick={() => {
+                      handleCurrentChat(data);
+                      setCurrentChat(data);
+                    }}
+                  >
+                    <div className="contact-img">
+                      <img className="img" src={noDP} alt=" " />
+                      {isOnline ? <div className="online"></div> : null}
+                    </div>
+                    <div className="contact-name">
+                      <p style={{ color: "black" }}>{data?.fullName}</p>
+                    </div>
+                    {currentChat?._id === data?._id ? " " : userNote.length > 0 && (
+                      <div className="notification">{userNote.length}</div>
+                    )}
                   </div>
-                  <div className="contact-name">
-                    <p style={{ color: "black" }}>{data?.name}</p>
-                  </div>
-
-                  {currentChat?._id === data?._id
-                    ? " "
-                    : userNote.length > 0 && (
-                        <div className="notification">{userNote.length}</div>
-                      )}
-                </div>
-              );
+                );
+              } else {
+                return null;
+              }
             })}
       </div>
     </>

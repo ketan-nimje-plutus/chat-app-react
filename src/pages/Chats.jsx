@@ -11,16 +11,20 @@ import { socket } from "../socket";
 import { Navigate } from "react-router-dom";
 import AiChatContainer from "./AiChatContainer";
 import AiImageContainer from "./AiImageContainer";
+import ShowClientinChat from "./ShowClientinChat";
 // import { Container, Row, Col } from "react-bootstrap";
-
 function Chats() {
   const navigate = useNavigate();
   const [currentChat, setCurrentChat] = useState(undefined);
-
+  const [onlineUser, setOnlineUser] = useState([]);
   const [contact, setContact] = useState();
+  const [message, setMessage] = useState([]);
 
+  console.log(currentChat, 'currentChatcurrentChat')
   const { isLoggin, user } = useSelector((state) => state.auth);
-  console.log("user", user);
+  const UserData = JSON.parse(localStorage.getItem('userdata'));
+  console.log(UserData, '1111')
+  console.log("user11", user);
 
   if (!isLoggin) {
     console.log("not login");
@@ -48,8 +52,9 @@ function Chats() {
 
   //handle current user
   const handleCurrentChat = (chat) => {
+    console.log(chat, 'chatsetCurrentChat')
     setCurrentChat(chat);
-    // console.log("current chat",chat)
+    // console.log("current chat",chat)   
   };
 
   return (
@@ -59,6 +64,10 @@ function Chats() {
           handleCurrentChat={handleCurrentChat}
           contact={contact}
           currentUser={user}
+          setOnlineUser={setOnlineUser}
+          onlineUser={onlineUser}
+          message={message}
+
         />
       </div>
       <div className="chat">
@@ -69,9 +78,17 @@ function Chats() {
         ) : currentChat == "AI_Image" ? (
           <AiImageContainer currentUser={user} />
         ) : (
-          <ChatContainer currentChat={currentChat} currentUser={user} />
+          <>
+          {console.log(UserData?.role == "BD",'aaaaa')}
+            {UserData?.role == "BD" ?
+              <ChatContainer currentChat={currentChat} currentUser={user} onlineUser={onlineUser} message={message} setMessage={setMessage} contact={contact} />
+              :
+              <ShowClientinChat currentChat={currentChat} currentUser={user} onlineUser={onlineUser} message={message} setMessage={setMessage} contact={contact} />
+            }
+          </>
         )}
       </div>
+
     </div>
   );
 }
