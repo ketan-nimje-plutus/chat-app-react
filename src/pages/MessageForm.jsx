@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "../../src/assets/CSS/messageForm.css";
 function MessageForm() {
     const [formData, setFormData] = useState({
-        fullName: '',
+        name: '',
         email: '',
         contactNumber: '',
         message: '',
@@ -25,12 +25,12 @@ function MessageForm() {
             <h2 className='title'>Contact Form</h2>
             <form onSubmit={handleSubmit} className='Form'>
                 <div >
-                    <label htmlFor="fullName">Full Name:</label>
+                    <label htmlFor="fullName">name:</label>
                     <input
                         type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
+                        id="name"
+                        name="name"
+                        value={formData.name}
                         onChange={handleChange}
                         required
                         className='InputValue'

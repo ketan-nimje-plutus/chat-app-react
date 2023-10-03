@@ -12,15 +12,15 @@ let user = null;
 if (token) {
   user = jwtDecode(token);
   console.log(user,'jjjj')
-  localStorage.setItem('userdata',JSON.stringify(user));
+  // localStorage.setItem('userdata',JSON.stringify(user));
   console.log(user, 'useruser');
 }
 let initialState = {
   user: {
     id: user?.id ? user.id : null,
-    fullName: user?.fullName ? user.fullName : null,
     email: user?.email ? user.email : null,
-    contactNumber: user?.contactNumber ? user.contactNumber : null,
+    password: user?.password ? user.password : null,
+    name:user?.name ? user.name : null,
   },
   isLoggin: user ? true : false,
   errorMsg: null,
@@ -54,8 +54,7 @@ const authSlice = createSlice({
         socket.emit("login", data.id);
         state.user.id = data.id;
         state.user.email = data.email;
-        state.user.contactNumber = data.contactNumber;
-        state.user.fullName = data.fullName;
+        state.user.password = data.password;
         state.errorMsg = null;
         state.isLoggin = true;
       } else {

@@ -11,10 +11,12 @@ export const postimage = (api, data) => {
   return imageapicall(api, data, "POST");
 };
 const apicall = (api, data, method) => {
+
   const token = localStorage.getItem("user")
     ? localStorage.getItem("user")
     : null;
   if (method === "GET") {
+
     return fetch(BASE_URL + api, {
       method: method,
       headers: {
@@ -33,6 +35,7 @@ const apicall = (api, data, method) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
+
     });
   }
 };

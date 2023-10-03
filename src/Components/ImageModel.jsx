@@ -53,7 +53,7 @@ function ImageModel({ Img, setShowImg, chatGptImg }) {
               <>
                 <iframe
                   // src={`http://docs.google.com/gview?url=https://chat-app-backend-2qte.onrender.com/public/${Img}&embedded=true`}
-                  src={`http://docs.google.com/gview?url=https://http://localhost:9090/public/${Img}`}
+                  src={`http://localhost:9090/public/${Img}`}
                   width="95%"
                   height="600px"
                 ></iframe>

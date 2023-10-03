@@ -188,7 +188,7 @@ function ShowClientinChat({ currentChat, currentUser, onlineUser, contact }) {
             <div className="chat-container">
                 <div className="user-container">
                     <img className="profile-img" src={noDP} alt=" "></img>
-                    {currentChat?.fullName}
+                    {currentChat?.name}
                 </div>
                 {isUserOnline ? (
                     <div id="scrollTop" className="messages-container" ref={scroll}>

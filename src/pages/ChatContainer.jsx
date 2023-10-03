@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { postdata, postimage } from "../Utils/http.class";
 import moment from "moment";
 import { socket } from "../socket";
-import noDP from "../../public/User-image.png";
+import noDP from "../../public/noDP.jpg";
 import Loader from "../Components/Loader";
 import ImageModel from "../Components/ImageModel";
 import video from "../../public/video.jpg";
@@ -40,7 +40,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     const response = await postdata("message/sendMessage", data);
     const res = await response.json();
 
-    console.lof(res,'res')
     socket.emit("send-msg", {
       from: currentUser?.id,
       to: currentChat?._id,
@@ -54,7 +53,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
   };
   //handle ImagehandleSendImage
   const handleSendImage = async (file, type) => {
-    console.log("send image called", type);
     const data = new FormData();
     data.append("image", file);
     data.append("from", currentUser.id);
@@ -62,7 +60,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     data.append("msg_type", type);
     const response = await postimage("message/sendImage", data);
     const res = await response.json();
-    console.log("resssssss", res.data);
     if (res.status == 400) {
       errorToast(res.error);
     }
@@ -86,8 +83,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     };
     const response = await postdata("message/getAllMessage", data);
     const res = await response.json();
-    console.log("res res", res);
-
     setMessage(res.message);
     setLoadding(false);
   };
@@ -116,7 +111,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     return () => {
       msgBox?.removeEventListener("scroll", handleScroll);
     };
-  });
+  },[]);
 
   useEffect(() => {
     if (socket) {
@@ -140,9 +135,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
         }
       });
     }
-  });
-
-
+  },[]);
   useEffect(() => {
     {
       getMsg && setMessage([...message, getMsg]);
@@ -171,7 +164,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
       URL = Img;
       saveAs(URL, "image.png");
     } else {
-      URL = `https://chat-app-backend-2qte.onrender.com/public/${Img}`;
+      URL = `http://localhost:9090/public/${Img}`;
       saveAs(URL, Img);
     }
   };
@@ -182,7 +175,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
       <div className="chat-container">
         <div className="user-container">
           <img className="profile-img" src={noDP} alt=" "></img>
-          {currentChat?.fullName}
+          {currentChat?.name}
         </div>
         <div id="scrollTop" className="messages-container" ref={scroll}>
           {/* {message.length > 10 && (
@@ -217,7 +210,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
                     (data.attechment &&
                       (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
                       <img
-                        src={`https://chat-app-backend-2qte.onrender.com/public/${data.attechment}`}
+                        src={`http://localhost:9090/public/${data.attechment}`}
                         style={{
                           height: "200px",
                           width: "200px",

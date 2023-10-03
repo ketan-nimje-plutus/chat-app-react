@@ -6,15 +6,14 @@ import { logoutUser } from "../redux/feature/authSlice";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../socket";
 import logo from "../../public/logo.png";
-// import logo from "https://web.plutustec.com/image/Plutus-logo.png";
-// import noDP from "../../public/noDP.jpg";
-import noDP from "../../public/User-image.png";
+import noDP from "../../public/noDP.jpg";
 import "../../src/assets/CSS/navigationbar.css";
 
 function NavigationBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggin, user } = useSelector((state) => state.auth);
+  console.log(user,'user2222')
   const logout = () => {
     socket.emit("end-connection");
     dispatch(logoutUser());
@@ -26,7 +25,7 @@ function NavigationBar() {
       <Container fluid>
         <Link to="/chat">
           {" "}
-          <img src="https://web.plutustec.com/image/Plutus-logo.png" width="100" ></img>
+          <img src={logo} width="100"></img>
         </Link>
         {!isLoggin ? (
           <>
@@ -34,7 +33,7 @@ function NavigationBar() {
               <Stack direction="horizontal">
                 <h4>
                   {location.pathname !== "/login" &&
-                  location.pathname !== "/register" ? (
+                    location.pathname !== "/register" ? (
                     <Link to="/login">login</Link>
                   ) : null}
                 </h4>
@@ -51,7 +50,7 @@ function NavigationBar() {
                     height="30px"
                     style={{ borderRadius: "50%" }}
                   ></img>{" "}
-                  {user?.fullName && user.fullName}
+                  {user?.name && user.name}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>profile</Dropdown.Item>

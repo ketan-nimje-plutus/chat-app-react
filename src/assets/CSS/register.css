@@ -23,28 +23,17 @@ input {
   justify-content: center;
 }
 .input-submit .submit-button {
-  /* border: none;
+  border: none;
   outline: none;
-  /* color: white !important; */
+  color: white !important;
   height: 40px;
   width: 160px;
   font-weight: 500;
- border-radius: 7%;
- text-align: center;
- justify-content: center;
-  /* background-color: #5793ce; */
-  display: flex;
-  margin: auto;
-  margin-top: 20px;
-  background-color: #ff6c37;
-  color: white !important;
-  border-color: white;
+  border-radius: 7%;
+  background-color: #5793ce;
 }
 
 .input-submit .submit-button:hover {
- /* background-color:#173d7a; */
- background-color: white !important;
- color: #ff6c37 !important;
- border:1px solid #ff6c37;
+ background-color:#173d7a;
 
 }
