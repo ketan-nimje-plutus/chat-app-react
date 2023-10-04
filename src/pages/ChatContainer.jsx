@@ -168,7 +168,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
       saveAs(URL, Img);
     }
   };
-  console.log(message, 'gggggg')
   return (
     <>
       {/* <ToastContainer /> */}
@@ -178,11 +177,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
           {currentChat?.name}
         </div>
         <div id="scrollTop" className="messages-container" ref={scroll}>
-          {/* {message.length > 10 && (
-            <button className="view-more-button" onClick={() => viewMore()}>
-              View more
-            </button>
-          )} */}
           {loadding ? (
             <div className="loader-container">
               <Loader />

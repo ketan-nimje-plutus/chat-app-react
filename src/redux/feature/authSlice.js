@@ -5,7 +5,7 @@ import { socket } from "../../socket";
 import { useEffect } from "react";
 import { successToast } from "../../Components/Toast";
 
-let token = localStorage.getItem("user") ? localStorage.getItem("user") : null;
+let token = localStorage.getItem("user") ? localStorage.getItem("user") : null
 let user = null;
 
 

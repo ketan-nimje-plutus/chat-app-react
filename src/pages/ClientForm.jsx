@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEnvelope, faMobileAlt, faComment } from "@fortawesome/free-solid-svg-icons";
 import { getdata } from "../Utils/http.class";
 
+
 let userList = [];
 
 function ClientForm() {
@@ -91,6 +92,7 @@ function ClientForm() {
                         </Col> */}
                         <Col md={12}>
                             <div className="register-form">
+                            <h3>BD is online <b/> Please fill out the form. </h3>
                                 <form onSubmit={handleSubmit}>
                                     <div className="input-container">
                                         <div className="input">
