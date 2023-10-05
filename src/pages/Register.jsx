@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { errorToast } from "../Components/Toast";
 import "../../src/assets/CSS/register.css";
 import { Link } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import login from "../../public/login.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -34,12 +34,12 @@ function Register() {
   return (
     <Container className="p-4  Welcome">
       <Row>
-        <Col md={6}>
+        {/* <Col md={6}>
           <img src={login} className="w-100" />
-        </Col>
-        <Col md={6}>
+        </Col> */}
+        <Col md={12}>
           <div className="register-form">
-            <h1>Sign Up</h1>
+            <h1>Register</h1>
             <form onSubmit={handleSubmit}>
               <div className="input-container">
                 <div className="input">
@@ -79,7 +79,7 @@ function Register() {
                 </div>
               </div>
               <div className="input-submit">
-                <input className="submit-button" type="Submit"></input>
+                <Button className="submit-button" type="Submit">Register</Button>
               </div>
             </form>
             <div>

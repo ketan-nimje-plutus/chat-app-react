@@ -15,9 +15,9 @@ function App() {
     <BrowserRouter>
       <>
         <div className="app-container">
-          <div className="nav-bar">
+          {/* <div className="nav-bar">
             <NavigationBar />
-          </div>
+          </div> */}
           <div className="content">
             <ToastContainer />
             <Routes>

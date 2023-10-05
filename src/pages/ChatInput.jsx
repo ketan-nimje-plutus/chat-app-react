@@ -33,7 +33,6 @@ function ChatInput({ handleSendChat, handleSendImage }) {
     },
 
     onDrop: async (acceptFile) => {
-      console.log("acceptFile", acceptFile[0]);
       if (validation(acceptFile[0])) {
         setAttechment(
           Object.assign(acceptFile, {
@@ -49,7 +48,6 @@ function ChatInput({ handleSendChat, handleSendImage }) {
     }
   }, [attechment]);
   const validation = (file) => {
-    console.log("fileeeee type...", file.type);
     if (file.size > 5 * 1024 * 1024) {
       errorToast("invalid size lenth");
       setAttechment(null);
@@ -66,7 +64,7 @@ function ChatInput({ handleSendChat, handleSendImage }) {
       file.type != "application/x-zip-compressed" &&
       file.type != "application/zip" &&
       file.type !=
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
       file.type != "video/mp4"
     ) {
       errorToast("invalid type !!!");
@@ -109,7 +107,7 @@ function ChatInput({ handleSendChat, handleSendImage }) {
           }}
         >
           <div className="btn-send">
-            <div className="emoji">
+            {/* <div className="emoji">
               <FontAwesomeIcon
                 className="icons"
                 icon={faFaceSmile}
@@ -122,22 +120,44 @@ function ChatInput({ handleSendChat, handleSendImage }) {
             <div className="attechment" {...getRootProps()}>
               <input {...getInputProps()} />
               <FontAwesomeIcon icon={faPaperclip} className="icons" />
-            </div>
+            </div> */}
             <input
               className="input"
               type="text"
               value={msg}
-              placeholder="Send a message"
+              placeholder="Type a message"
               onChange={(e) => {
                 setMsg(e.target.value);
               }}
+              style={{
+                padding: '10px',
+                width: '100%',
+              }}
             />
-            {(msg !== "" || selected) && (
+            <div className="send-icons-all">
+            <div className="emoji">
+                <FontAwesomeIcon
+                  className="icons"
+                  icon={faFaceSmile}
+                  onClick={() => setShowEmoji(!showEmoji)}
+                />
+                <div className="emoji-picker">
+                  {showEmoji && <Picker onEmojiClick={setEmoji} />}
+                </div>
+              </div>
+              <div className="attechment" {...getRootProps()}>
+                <input {...getInputProps()} />
+                <FontAwesomeIcon icon={faPaperclip} className="icons" />
+              </div>
+                 {(msg !== "" || selected) && (
               <button id="sub" className="send-button" type="submit">
                 {" "}
                 ➤
               </button>
             )}
+              
+            </div>
+
           </div>
         </form>
         <div></div>

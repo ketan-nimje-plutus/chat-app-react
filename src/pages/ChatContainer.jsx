@@ -12,6 +12,9 @@ import zip from "../../public/zip.png";
 import doc from "../../public/doc.png";
 import xls from "../../public/xls.png";
 import ChatInput from "./ChatInput";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+
 
 let userList = [];
 
@@ -29,14 +32,12 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
 
   //handle msg(database,socket,and fronte nd)
   const handleSendChat = async (msg, type) => {
-    console.log("send chat called", type);
     const data = {
       from: currentUser.id,
       to: currentChat._id,
       message: msg,
       msg_type: type,
     };
-    // console.log("data", data);
     const response = await postdata("message/sendMessage", data);
     const res = await response.json();
 
@@ -83,6 +84,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     };
     const response = await postdata("message/getAllMessage", data);
     const res = await response.json();
+    console.log(res, 'res')
     setMessage(res.message);
     setLoadding(false);
   };
@@ -111,7 +113,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     return () => {
       msgBox?.removeEventListener("scroll", handleScroll);
     };
-  },[]);
+  }, []);
 
   useEffect(() => {
     if (socket) {
@@ -135,7 +137,8 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
         }
       });
     }
-  },[]);
+  }, []);
+
   useEffect(() => {
     {
       getMsg && setMessage([...message, getMsg]);
@@ -156,8 +159,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     }
   }, [message]);
 
-  console.log("...", showImg);
-  console.log("data", data);
   const handleDownload = (Img) => {
     let URL;
     if (chatGptImg) {
@@ -173,8 +174,24 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
       {/* <ToastContainer /> */}
       <div className="chat-container">
         <div className="user-container">
-          <img className="profile-img" src={noDP} alt=" "></img>
-          {currentChat?.name}
+         <div className="user-profile">
+         <div className="online-user">
+            <img className="profile-img" src={noDP} alt=" "></img>
+            <div className="online"></div>
+          </div>
+          <div>
+            <div> {currentChat?.name}</div>
+            <div className="user-status">Active now</div></div>
+         </div>
+
+          <div className="search-user-msg">
+            <div className="icon-color">
+              <FontAwesomeIcon icon={faSearch} />
+            </div>
+            <div className="icon-color">
+              <FontAwesomeIcon icon={faEllipsisV} />
+            </div>
+          </div>
         </div>
         <div id="scrollTop" className="messages-container" ref={scroll}>
           {loadding ? (
@@ -184,6 +201,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
           ) : (
             message &&
             message.slice(-data).map((data, index) => {
+              { console.log(message, 'x') }
               const ext = data.attechment?.split(".").pop();
               return (
                 <div
@@ -193,12 +211,28 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
                   }
                 >
                   {data.message && (
-                    <p
-                      className={data.fromSelf ? "sender-msg" : "receiver-msg"}
-                    >
-                      {data.message}
-                      <br></br>
-                    </p>
+                    <>
+                      <div className="chat-msg-data">
+                        <div> <img className="profile-img" src={noDP} alt=" " style={{ width: "70px", height: "70px" }}></img></div>
+                        <div>
+                          <div className="time-user-chat">
+                            <div>{data?.fromSelf ? <span className="you-text">you</span> : <div className="you-text"> {currentChat?.name}</div>}</div>
+                            <span className="time">
+                              {moment(
+                                data.createdAt ? data.createdAt : new Date()
+                              ).format("h:mm: a")}
+                            </span>
+                          </div>
+                          <p
+                            className={data.fromSelf ? "sender-msg" : "receiver-msg"}
+                          >
+                            {data.message}
+                            <br></br>
+                          </p>
+                        </div>
+                      </div>
+
+                    </>
                   )}
                   {data.attechment &&
                     (data.attechment &&
@@ -287,11 +321,7 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
                         }}
                       />
                     ))}
-                  <span className="time">
-                    {moment(
-                      data.createdAt ? data.createdAt : new Date()
-                    ).format("h:mm: a")}
-                  </span>
+
                 </div>
               );
             })

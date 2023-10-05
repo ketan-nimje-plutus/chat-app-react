@@ -30,7 +30,6 @@ function AiImageContainer() {
     setMessage([...infoo]);
     const response = await postdata("message/imagGenrator", data);
     const res = await response.json();
-    console.log("response", res);
     if (res) {
       setTyping(false);
       setChatGptImg(true);

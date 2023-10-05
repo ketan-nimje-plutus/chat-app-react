@@ -15,9 +15,6 @@ function MessageForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // You can perform form submission logic here
-        // For this example, we'll just log the form data
-        console.log(formData);
     };
 
     return (

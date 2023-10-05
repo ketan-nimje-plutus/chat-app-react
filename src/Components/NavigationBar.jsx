@@ -13,8 +13,7 @@ function NavigationBar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggin, user } = useSelector((state) => state.auth);
-  const storedDataString = localStorage.getItem('client')
-    const parsedData = JSON.parse(storedDataString);
+
   console.log(user,'user2222')
   const logout = () => {
     socket.emit("end-connection");
@@ -52,7 +51,7 @@ function NavigationBar() {
                     height="30px"
                     style={{ borderRadius: "50%" }}
                   ></img>{" "}
-                  {user?.name && user?.name || parsedData?.name}
+                  {user?.name && user?.name }
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item>profile</Dropdown.Item>

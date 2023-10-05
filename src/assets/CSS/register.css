@@ -9,7 +9,12 @@
   flex-direction: row;
   width: 250px;
   gap: 10px;
-  border-bottom: 1px solid skyblue;
+  padding: 10px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  align-items: center;
+
+  /* border-bottom: 1px solid skyblue; */
 }
 input {
   border: none;
@@ -29,11 +34,14 @@ input {
   height: 40px;
   width: 160px;
   font-weight: 500;
-  border-radius: 7%;
-  background-color: #5793ce;
+  border-radius: 7px;
+  background-color: #000000;
+  box-shadow: none !important;
+
 }
 
-.input-submit .submit-button:hover {
- background-color:#173d7a;
-
+.input-submit .submit-button:hover , .input-submit .submit-button:active {
+ background-color:white !important;
+ color: #000000 !important;
+ border: 1px solid #000000 !important;
 }

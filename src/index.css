@@ -38,3 +38,9 @@ body{
 @media (max-width:768px) {
   
 }
+.app-container{
+  height: 100vh;
+}
+.content{
+  height: 100% !important;
+}

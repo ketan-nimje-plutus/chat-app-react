@@ -19,7 +19,6 @@ function ClientForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isLoggin, errorMsg } = useSelector((state) => state.client);
-    console.log(isLoggin, 'isLogginisLoggin');
     const [onlineUser, setOnlineUser] = useState([]);
     const [oUser, setOUser] = useState([]);
     const [contact, setContact] = useState();
@@ -30,7 +29,6 @@ function ClientForm() {
             contactNumber: "",
         },
         onSubmit: (event) => {
-            console.log(values, 'values');
             dispatch(loginUser(values));
         },
     });
@@ -40,15 +38,12 @@ function ClientForm() {
     const getUsers = async () => {
         const res = await getdata("user/getUser");
         const response = await res.json();
-        console.log(response, 'user/getUser')
         setContact(response.users);
     };
     useEffect(() => {
         getUsers();
     }, []);
 
-
-    console.log(contact, 'contact')
 
     userList = contact?.map((data) => { data });
     useEffect(() => {
@@ -59,7 +54,6 @@ function ClientForm() {
                     let index = userList?.findIndex((item) => item?._id == element?.userID);
                     if (index >= 0) {
                         userList[index].socketid = data.socketId;
-                        console.log(data.socketId, 'ata.socketIdata.socketId')
                     }
                 });
                 setOnlineUser(data);

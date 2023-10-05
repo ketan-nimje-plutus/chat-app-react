@@ -25,7 +25,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
   useEffect(() => {
     if (socket) {
       socket.on("online-user", (data) => {
-        console.log("online-user", data);
         data.forEach((element) => {
           let index = userList?.findIndex((item) => item._id == element.userID);
           if (index >= 0) {
@@ -35,7 +34,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
         setOnlineUser(data);
       });
     }
-    console.log("socket");
   }, [socket, userList]);
 
   //fileter message notification
@@ -45,8 +43,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
       filterData =
         notification &&
         notification?.filter((note) => {
-          console.log(note, 'note1111')
-          console.log(filterData, 'filterData')
           localStorage.setItem("newMessage", JSON.stringify(note))
           return note?.from === user?._id;
         });
@@ -57,6 +53,7 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
   };
 
   userList = contact?.filter((data) => data._id !== currentUser.id);
+
   const newMessage = JSON.parse(localStorage.getItem("newMessage"));
   if (newMessage) {
     const userWithNewMessage = userList?.find((user) => user._id === newMessage.from);
@@ -65,7 +62,6 @@ function Contact({ handleCurrentChat, contact, currentUser }) {
       userList.unshift(userWithNewMessage);
     }
   }
-
   //get unseen message
   const viewMessage = async () => {
     const data = {

@@ -5,7 +5,7 @@ import { loginUser } from "../redux/feature/authSlice";
 import { useEffect } from "react";
 import { errorToast } from "../Components/Toast";
 import { Link } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import login from "../../public/login.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
@@ -37,12 +37,9 @@ function Login() {
     <>
       <Container className="p-4  Welcome">
         <Row>
-          <Col md={6}>
-            <img src={login} className="w-100" />
-          </Col>
-          <Col md={6}>
+          <Col md={12}>
             <div className="register-form">
-              <h1>Sign In</h1>
+              <h1>Login</h1>
               <form onSubmit={handleSubmit}>
                 <div className="input-container">
                   <div className="input">
@@ -53,6 +50,7 @@ function Login() {
                       name="email"
                       onChange={handleChange}
                       value={values.email}
+                      className="Input-Field"
                     />
                   </div>
                 </div>
@@ -69,7 +67,7 @@ function Login() {
                   </div>
                 </div>
                 <div className="input-submit">
-                  <input className="submit-button" type="Submit"></input>
+                  <Button className="submit-button" type="Submit">Login</Button>
                 </div>
               </form>
               <div>

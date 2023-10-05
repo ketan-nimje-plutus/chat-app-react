@@ -18,7 +18,7 @@ import xls from "../../public/xls.png";
 
 let userList = [];
 
-function ClientChatConatainer({ onlineIs }) {
+function ClientChatConatainer() {
 
     const [message, setMessage] = useState([]);
     const [BD, setBD] = useState([]);
@@ -36,17 +36,13 @@ function ClientChatConatainer({ onlineIs }) {
     const [oUser, setOUser] = useState([]);
     const [chatUser, setChatUser] = useState([])
     const [contact, setContact] = useState();
-    console.log(contact, 'contact111')
     let currentUser = parsedData?._id
-    // let currentChat = "65156c4822226f0dec1ee9b1"
-    console.log(BD, 'BD')
     const DataGet = localStorage.getItem('currentChat')
     const currentChat = JSON.parse(DataGet);
 
     const getUsers = async () => {
         const res = await getdata("user/getUser");
         const response = await res.json();
-        console.log(response, 'responseresponse')
         setContact(response.users);
     };
     useEffect(() => {
@@ -55,7 +51,6 @@ function ClientChatConatainer({ onlineIs }) {
 
 
     const getUsersID = async () => {
-        console.log(currentChat.userID, 'currentChat.userID')
         const data = {
             "id": currentChat?.userID
         }
@@ -68,7 +63,6 @@ function ClientChatConatainer({ onlineIs }) {
     }, []);
 
     userList = contact?.map((data) => data);
-    console.log(userList, 'userListuserList')
     useEffect(() => {
         if (socket) {
             socket.on("online-user", (data) => {
@@ -77,19 +71,16 @@ function ClientChatConatainer({ onlineIs }) {
                     let index = userList?.findIndex((item) => item?._id == element?.userID);
                     if (index >= 0) {
                         userList[index].socketid = data.socketId;
-                        console.log(data.socketId, 'ata.socketIdata.socketId')
                     }
                 });
                 setOnlineUser(data);
             });
         }
-        console.log("socket");
     }, [socket, userList]);
 
 
     //handle msg(database,socket,and frontend)
     const handleSendChat = async (msg, type) => {
-        console.log("send chat called", type);
         const data = {
             from: currentUser,
             to: currentChat?.userID,
@@ -99,7 +90,6 @@ function ClientChatConatainer({ onlineIs }) {
 
         const response = await postdata("message/sendMessage", data);
         const res = await response.json();
-        console.log(res, "send msg APi")
         socket.emit("send-msg", {
             from: currentUser,
             to: currentChat.userID,
@@ -218,8 +208,6 @@ function ClientChatConatainer({ onlineIs }) {
         }
     }, [message]);
 
-    console.log("...", showImg);
-    console.log("data", data);
     const handleDownload = (Img) => {
         let URL;
         if (chatGptImg) {
@@ -235,10 +223,9 @@ function ClientChatConatainer({ onlineIs }) {
             {/* <ToastContainer /> */}
             <div className="chat-container">
                 {/* { chatUser.map((currentChat)=>{ */}
-                <div className="user-container">
-
-                    <img className="profile-img" src={noDP} alt=" "></img>
-                    {"Plutus Tack"}
+                <div className="client-container">
+                    <img className="profile-img" src={noDP} alt=" " style={{ width: "70px", height: "70px" }}></img>
+                    <p className="Client-Name">{"Plutus Tack"}</p>
                 </div>
                 <div id="scrollTop" className="messages-container" ref={scroll}>
                     {message.length > 10 && (
@@ -262,12 +249,12 @@ function ClientChatConatainer({ onlineIs }) {
                                     }
                                 >
                                     {data.message && (
-                                        <p
-                                            className={data.fromSelf ? "sender-msg" : "receiver-msg"}
-                                        >
-                                            {data.message}
-                                            <br></br>
-                                        </p>
+                                        <>
+                                            <p className={data.fromSelf ? "sender-msg" : "receiver-msg"}>
+                                                {data.message}
+                                            </p>
+                                           
+                                        </>
                                     )}
                                     {data.attechment &&
                                         (data.attechment &&

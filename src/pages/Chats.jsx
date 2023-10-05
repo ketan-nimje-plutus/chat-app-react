@@ -18,27 +18,19 @@ function Chats() {
   const [contact, setContact] = useState();
   const [onlineIs, setonlineIsUser] = useState(false);
 
-  console.log(currentChat, 'currentChatcurrentChat')
   const { isLoggin, user } = useSelector((state) => state.auth);
   const UserData = JSON.parse(localStorage.getItem('userdata'));
-  console.log(UserData, '1111')
-  console.log("user11", user);
-  console.log("onlineIsonlineIs", onlineIs);
+
 
   if (!isLoggin) {
-    console.log("not login");
     return <Navigate to="/form" />;
   }
-
-  console.log("current chat", currentChat);
-  console.log("current contact", contact);
   const getUsers = async () => {
     const res = await getdata("user/getUser");
     const response = await res.json();
     setContact(response.users);
   };
 
-  console.log(contact, 'contactcontactcontact')
 
   //get all users from backend
   useEffect(() => {
@@ -52,13 +44,10 @@ function Chats() {
       socket.emit("add-user", user.id);
     }
   }, [user]);
-  console.log(user, 'user111111')
-
+  
   //handle current user
   const handleCurrentChat = (chat) => {
-    console.log(chat, 'chatsetCurrentChat')
     setCurrentChat(chat);
-    // console.log("current chat",chat)   
   };
 
   return (
