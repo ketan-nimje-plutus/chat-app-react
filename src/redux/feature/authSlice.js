@@ -11,9 +11,6 @@ let user = null;
 
 if (token) {
   user = jwtDecode(token);
-  console.log(user,'jjjj')
-  // localStorage.setItem('userdata',JSON.stringify(user));
-  console.log(user, 'useruser');
 }
 let initialState = {
   user: {

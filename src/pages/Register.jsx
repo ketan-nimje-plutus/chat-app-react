@@ -38,7 +38,7 @@ function Register() {
           <img src={login} className="w-100" />
         </Col> */}
         <Col md={12}>
-          <div className="register-form">
+          <div className="register-form ">
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
               <div className="input-container">

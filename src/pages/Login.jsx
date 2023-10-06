@@ -38,7 +38,7 @@ function Login() {
       <Container className="p-4  Welcome">
         <Row>
           <Col md={12}>
-            <div className="register-form">
+            <div className="register-form ">
               <h1>Login</h1>
               <form onSubmit={handleSubmit}>
                 <div className="input-container">

@@ -14,16 +14,17 @@ import ClientChatConatainer from "./ClientChatConatainer";
 
 function Chats() {
   const [currentChat, setCurrentChat] = useState(undefined);
-  const [onlineUser, setOnlineUser] = useState([]);
   const [contact, setContact] = useState();
-  const [onlineIs, setonlineIsUser] = useState(false);
+  const [chatMsgData, setChatMsgData] = useState();
+  // const [onlineIs, setonlineIsUser] = useState(false);
+  const [onlineUser, setOnlineUser] = useState([]);
 
   const { isLoggin, user } = useSelector((state) => state.auth);
   const UserData = JSON.parse(localStorage.getItem('userdata'));
 
 
   if (!isLoggin) {
-    return <Navigate to="/form" />;
+    return <Navigate to="/" />;
   }
   const getUsers = async () => {
     const res = await getdata("user/getUser");
@@ -44,7 +45,7 @@ function Chats() {
       socket.emit("add-user", user.id);
     }
   }, [user]);
-  
+
   //handle current user
   const handleCurrentChat = (chat) => {
     setCurrentChat(chat);
@@ -57,7 +58,10 @@ function Chats() {
           handleCurrentChat={handleCurrentChat}
           contact={contact}
           currentUser={user}
-          setonlineIsUser={setonlineIsUser}
+          chatMsgData={chatMsgData}
+          // setonlineIsUser={setonlineIsUser}
+          setOnlineUser={setOnlineUser}
+          onlineUser={onlineUser}
         />
       </div>
       <div className="chat">
@@ -70,16 +74,15 @@ function Chats() {
 
             <AiImageContainer currentUser={user} />
           )
-            : (
-
-              user.contactNumber !== null ?
-                <ChatContainer currentChat={currentChat} currentUser={user} />
+          : (
+             user.contactNumber !== null ?
+              <ChatContainer currentChat={currentChat} currentUser={user} onlineUser={onlineUser} setChatMsgData={setChatMsgData} />
                 :
                 // onlineIs == true ?
-                <ClientChatConatainer currentChat={currentChat} currentUser={user} onlineIs={onlineIs} />
+              <ClientChatConatainer currentChat={currentChat} currentUser={user} onlineIs={onlineIs} />
               // : "Hello"
 
-            )}
+          )}
       </div>
 
     </div>

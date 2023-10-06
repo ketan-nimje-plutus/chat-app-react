@@ -18,8 +18,8 @@ import { faSearch, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 let userList = [];
 
-function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
-
+function ChatContainer({ currentChat, currentUser, onlineUser, setChatMsgData }) {
+  console.log(onlineUser, 'onlineUseronlineUserchat')
   const [message, setMessage] = useState([]);
   const [getMsg, setGetMsg] = useState();
   const [data, setData] = useState(5);
@@ -115,6 +115,10 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
     };
   }, []);
 
+useEffect(()=>{
+  setChatMsgData(message)
+},[message])
+
   useEffect(() => {
     if (socket) {
       socket.on("msg-recieve", (data) => {
@@ -169,20 +173,38 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
       saveAs(URL, Img);
     }
   };
+  const isCurrentUserOnline = onlineUser.some((user) => user?.userID === currentChat?._id);
+  console.log(currentChat, 'currentChat')
+  console.log(onlineUser, 'onlineUser')
   return (
     <>
       {/* <ToastContainer /> */}
       <div className="chat-container">
         <div className="user-container">
-         <div className="user-profile">
-         <div className="online-user">
-            <img className="profile-img" src={noDP} alt=" "></img>
-            <div className="online"></div>
+          <div className="user-status">
+            {isCurrentUserOnline ?
+              <div className="user-profile">
+                <div className="online-user">
+                  <img className="profile-img" src={noDP} alt=" "></img>
+                  <div className="online"></div>
+                </div>
+                <div>
+                  <div> {currentChat?.name}</div>
+                  <div className="user-status">Active now</div></div>
+              </div>
+              :
+              <div className="user-profile">
+                <div className="online-user">
+                  <img className="profile-img" src={noDP} alt=" "></img>
+                </div>
+                <div>
+                  <div> {currentChat?.name}</div>
+                  <div className="user-status">Offline</div></div>
+              </div>
+            }
           </div>
-          <div>
-            <div> {currentChat?.name}</div>
-            <div className="user-status">Active now</div></div>
-         </div>
+
+
 
           <div className="search-user-msg">
             <div className="icon-color">
@@ -201,7 +223,6 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
           ) : (
             message &&
             message.slice(-data).map((data, index) => {
-              { console.log(message, 'x') }
               const ext = data.attechment?.split(".").pop();
               return (
                 <div
@@ -212,11 +233,11 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
                 >
                   {data.message && (
                     <>
-                      <div className="chat-msg-data">
+                      <div className={data.fromSelf ? "your-message" : "chat-msg-data"}>
                         <div> <img className="profile-img" src={noDP} alt=" " style={{ width: "70px", height: "70px" }}></img></div>
                         <div>
                           <div className="time-user-chat">
-                            <div>{data?.fromSelf ? <span className="you-text">you</span> : <div className="you-text"> {currentChat?.name}</div>}</div>
+                            <div>{data?.fromSelf ? <span className="you-text ml-2">you</span> : <div className="you-text"> {currentChat?.name}</div>}</div>
                             <span className="time">
                               {moment(
                                 data.createdAt ? data.createdAt : new Date()
@@ -234,14 +255,15 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
 
                     </>
                   )}
+                  {console.log(video, 'video')}
                   {data.attechment &&
                     (data.attechment &&
                       (ext == "png" || ext == "jpeg" || ext == "jpg") ? (
                       <img
                         src={`http://localhost:9090/public/${data.attechment}`}
                         style={{
-                          height: "200px",
-                          width: "200px",
+                          height: "190px",
+                          width: "213px",
                           border: "2px solid #d9d9d9",
                         }}
                         onClick={() => {
@@ -249,8 +271,9 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
                         }}
                       />
                     ) : data.attechment && ext == "mp4" ? (
-                      <img
-                        src={video}
+                      <video
+                        src={`http://localhost:9090/public/${data.attechment}`}
+                        autoPlay
                         style={{
                           height: "120px",
                           width: "200px",
@@ -336,13 +359,15 @@ function ChatContainer({ currentChat, currentUser, onlineUser, contact }) {
           <div ref={scroll}></div>
         </div>
 
-        <div className="type"></div>
+       <div className="chat-send-msg-input">
+       <div className="type"></div>
         <div className="chat-input">
           <ChatInput
             handleSendChat={handleSendChat}
             handleSendImage={handleSendImage}
           />
         </div>
+       </div>
       </div>
     </>
   );

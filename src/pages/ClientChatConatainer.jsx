@@ -220,12 +220,10 @@ function ClientChatConatainer() {
     };
     return (
         <>
-            {/* <ToastContainer /> */}
             <div className="chat-container">
-                {/* { chatUser.map((currentChat)=>{ */}
                 <div className="client-container">
                     <img className="profile-img" src={noDP} alt=" " style={{ width: "70px", height: "70px" }}></img>
-                    <p className="Client-Name">{"Plutus Tack"}</p>
+                    <p className="Client-Name">{"Plutustec"}</p>
                 </div>
                 <div id="scrollTop" className="messages-container" ref={scroll}>
                     {message.length > 10 && (
@@ -248,12 +246,36 @@ function ClientChatConatainer() {
                                         data.fromSelf ? "messages-send" : "messages-rececive"
                                     }
                                 >
-                                    {data.message && (
+                                    {/* {data.message && (
                                         <>
                                             <p className={data.fromSelf ? "sender-msg" : "receiver-msg"}>
                                                 {data.message}
                                             </p>
-                                           
+
+                                        </>
+                                    )} */}
+                                    {data.message && (
+                                        <>
+                                            <div className={data.fromSelf ? "your-message" : "chat-msg-data"}>
+                                                <div> <img className="profile-img" src={noDP} alt=" " style={{ width: "70px", height: "70px" }}></img></div>
+                                                <div>
+                                                    <div className="time-user-chat">
+                                                        <div>{data?.fromSelf ? <span className="you-text ml-2">you</span> : <div className="you-text"> {'Plutustec'}</div>}</div>
+                                                        <span className="time">
+                                                            {moment(
+                                                                data.createdAt ? data.createdAt : new Date()
+                                                            ).format("h:mm: a")}
+                                                        </span>
+                                                    </div>
+                                                    <p
+                                                        className={data.fromSelf ? "sender-msg" : "receiver-msg"}
+                                                    >
+                                                        {data.message}
+                                                        <br></br>
+                                                    </p>
+                                                </div>
+                                            </div>
+
                                         </>
                                     )}
                                     {data.attechment &&
@@ -262,8 +284,8 @@ function ClientChatConatainer() {
                                             <img
                                                 src={`http://localhost:9090/public/${data.attechment}`}
                                                 style={{
-                                                    height: "200px",
-                                                    width: "200px",
+                                                    height: "190px",
+                                                    width: "213px",
                                                     border: "2px solid #d9d9d9",
                                                 }}
                                                 onClick={() => {
@@ -271,10 +293,11 @@ function ClientChatConatainer() {
                                                 }}
                                             />
                                         ) : data.attechment && ext == "mp4" ? (
-                                            <img
-                                                src={video}
+                                            <video
+                                                src={`http://localhost:9090/public/${data.attechment}`}
+                                                autoPlay
                                                 style={{
-                                                    height: "120px",
+                                                    height: "105px",
                                                     width: "200px",
                                                     border: "2px solid #d9d9d9",
                                                 }}
@@ -363,7 +386,7 @@ function ClientChatConatainer() {
                     ) : null}
                     <div ref={scroll}></div>
                 </div>
-
+                <div className="chat-send-msg-input">
                 <div className="type"></div>
                 <div className="chat-input">
                     <ChatInput
@@ -371,6 +394,7 @@ function ClientChatConatainer() {
                         handleSendImage={handleSendImage}
                     />
                 </div>
+            </div>
             </div>
         </>
     );

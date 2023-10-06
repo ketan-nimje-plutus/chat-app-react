@@ -20,6 +20,9 @@ function NavigationBar() {
     dispatch(logoutUser());
     navigate("/login");
   };
+  if (location.pathname === "/") {
+    return null; 
+  }
 
   return (
     <Navbar className="px-4 w-100 navbar">

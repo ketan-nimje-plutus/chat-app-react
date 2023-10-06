@@ -79,124 +79,202 @@ function ClientForm() {
         <>
             {oUser.length > 0 ?
 
+                // <Container className="p-4  Welcome">
+                //     <Row >
+                //         <Col md={6}>
+                //             <p>Plutus Technologies has steadfastly upheld its commitment to delivering exceptional services since its establishment in 2014.
+                //                 We remain committed to being at the forefront as a custom software development company.
+                //                 Innovative and technologically driven, we are constantly pushing the boundaries of our industry
+                //                 and setting new standards of excellence.</p>
+                //         </Col>
+                //         <Col md={6}>
+                //             <div className="register-form ">
+                //                 <h3>BD is online <b /> Please fill out the form. </h3>
+                //                 <form onSubmit={handleSubmit}>
+                //                     <div className="input-container">
+                //                         <div className="input">
+                //                             <FontAwesomeIcon icon={faUser} />
+                //                             <input
+                //                                 placeholder="Enter Name"
+                //                                 type="text"
+                //                                 name="name"
+                //                                 onChange={handleChange}
+                //                                 value={values.name}
+                //                             />
+                //                         </div>
+                //                     </div>
+                //                     <div className="input-container">
+                //                         <div className="input">
+                //                             <FontAwesomeIcon icon={faEnvelope} />
+                //                             <input
+                //                                 placeholder="Enter Email"
+                //                                 type="text"
+                //                                 name="email"
+                //                                 onChange={handleChange}
+                //                                 value={values.email}
+                //                             />
+                //                         </div>
+                //                     </div>
+                //                     <div className="input-container">
+                //                         <div className="input">
+                //                             <FontAwesomeIcon icon={faMobileAlt} />
+                //                             <input
+                //                                 type="number"
+                //                                 name="contactNumber"
+                //                                 placeholder="Enter Contact Number"
+                //                                 onChange={handleChange}
+                //                                 value={values.contactNumber}
+                //                             />
+                //                         </div>
+                //                     </div>
+                //                     <div className="input-submit">
+                //                         <Button className="submit-button" type="Submit">talk with sales</Button>
+                //                     </div>
+                //                 </form>
+                //             </div>
+                //         </Col>
+                //     </Row>
+                // </Container>
                 <Container className="p-4  Welcome">
-                    <Row>
-                        {/* <Col md={6}>
-                            <img src={login} className="w-100" />
-                        </Col> */}
-                        <Col md={12}>
-                            <div className="register-form">
-                            <h3>BD is online <b/> Please fill out the form. </h3>
-                                <form onSubmit={handleSubmit}>
+                <Row className="main-contact-form">
+
+                    <Col md={6}>
+                        <div className="main-text">
+                            <h3 className="text-title">Plutus Technologies</h3>
+                            <span className="text">Plutus Technologies has steadfastly upheld its commitment to delivering exceptional services since its establishment in 2014.
+                                We remain committed to being at the forefront as a custom software development company.
+                                Innovative and technologically driven, we are constantly pushing the boundaries of our industry
+                                and setting new standards of excellence.</span>
+                        </div>
+                    </Col>
+
+                    <Col md={6}>
+
+                        <div className="register-form contact-form-register">
+                            {/* <h1>Sign In</h1> */}
+                            <p className="form-text-register"> Please fill out the form.</p>
+                            <form onSubmit={handleSubmit} className="form-text-register">
                                     <div className="input-container">
                                         <div className="input">
                                             <FontAwesomeIcon icon={faUser} />
-                                            <input
+                                             <input
                                                 placeholder="Enter Name"
                                                 type="text"
-                                                name="name"
-                                                onChange={handleChange}
-                                                value={values.name}
+                                             name="name"
+                                                 onChange={handleChange}
+                                                 value={values.name}
                                             />
-                                        </div>
-                                    </div>
-                                    <div className="input-container">
-                                        <div className="input">
+                                     </div>
+                                     </div>
+                                   <div className="input-container">
+                                       <div className="input">
                                             <FontAwesomeIcon icon={faEnvelope} />
-                                            <input
-                                                placeholder="Enter Email"
-                                                type="text"
-                                                name="email"
-                                                onChange={handleChange}
-                                                value={values.email}
+                                           <input
+                                                 placeholder="Enter Email"
+                                                 type="text"
+                                                 name="email"
+                                                 onChange={handleChange}
+                                               value={values.email}
                                             />
                                         </div>
                                     </div>
-                                    <div className="input-container">
+                                     <div className="input-container">
                                         <div className="input">
                                             <FontAwesomeIcon icon={faMobileAlt} />
                                             <input
                                                 type="number"
                                                 name="contactNumber"
-                                                placeholder="Enter Contact Number"
-                                                onChange={handleChange}
-                                                value={values.contactNumber}
-                                            />
-                                        </div>
+                                          placeholder="Enter Contact Number"
+                                                 onChange={handleChange}
+                                             value={values.contactNumber}
+                                             />
+                                         </div>
                                     </div>
                                     <div className="input-submit">
-                                        <Button className="submit-button" type="Submit">talk with sales</Button>
+                                        <Button className="submit-button" type="Submit">Talk with sales</Button>
                                     </div>
-                                </form>
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
+                         </form>      
+                            {/* <div>
+               New User? <Link to="/register">Create Account</Link>
+             </div> */}
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
                 :
                 <Container className="p-4  Welcome">
-                    <Row>
+                    <Row className="main-contact-form">
 
                         <Col md={6}>
-                            {/* <img src={login} className="w-100" /> */}
+                            <div className="main-text">
+                                <h3 className="text-title">Plutus Technologies</h3>
+                                <span className="text">Plutus Technologies has steadfastly upheld its commitment to delivering exceptional services since its establishment in 2014.
+                                    We remain committed to being at the forefront as a custom software development company.
+                                    Innovative and technologically driven, we are constantly pushing the boundaries of our industry
+                                    and setting new standards of excellence.</span>
+                            </div>
                         </Col>
 
-                        <Col md={12}>
+                        <Col md={6}>
 
-                            <div className="register-form">
+                            <div className="register-form contact-form-register">
                                 {/* <h1>Sign In</h1> */}
-                                <h3>All the BDs are offline for further information, please leaving  message</h3>
-                                <form>
-                                    <div className="input-container">
-                                        <div className="input">
-                                            <FontAwesomeIcon icon={faUser} />
-                                            <input
-                                                placeholder="Enter Name"
-                                                type="text"
-                                                name="name"
-                                            // onChange={handleChange}
-                                            // value={values.name}
-                                            />
+                                <p className="form-text-register">Currently BDS are not available , please leave the message</p>
+                                <form className="form-text-register">
+                                    <div>
+                                        <div className="input-container">
+                                            <div className="input">
+                                                <FontAwesomeIcon icon={faUser} />
+                                                <input
+                                                    placeholder="Enter Name"
+                                                    type="text"
+                                                    name="name"
+                                                // onChange={handleChange}
+                                                // value={values.name}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="input-container">
+                                            <div className="input">
+                                                <FontAwesomeIcon icon={faEnvelope} />
+                                                <input
+                                                    placeholder="Enter Email"
+                                                    type="text"
+                                                    name="email"
+                                                // onChange={handleChange}
+                                                // value={values.email}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="input-container">
+                                            <div className="input">
+                                                <FontAwesomeIcon icon={faMobileAlt} />
+                                                <input
+                                                    type="number"
+                                                    name="contactNumber"
+                                                    placeholder="Enter Contact Number"
+                                                // onChange={handleChange}
+                                                // value={values.contactNumber}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="input-container">
+                                            <div className="input">
+                                                <FontAwesomeIcon icon={faComment} />
+                                                <input
+                                                    type="text"
+                                                    name="message"
+                                                    placeholder="Enter Message"
+                                                // onChange={handleChange}
+                                                // value={values.contactNumber}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="input-submit">
+                                            <Button className="submit-button" type="Submit">Send To Mail</Button>
                                         </div>
                                     </div>
-                                    <div className="input-container">
-                                        <div className="input">
-                                            <FontAwesomeIcon icon={faEnvelope} />
-                                            <input
-                                                placeholder="Enter Email"
-                                                type="text"
-                                                name="email"
-                                            // onChange={handleChange}
-                                            // value={values.email}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-container">
-                                        <div className="input">
-                                            <FontAwesomeIcon icon={faMobileAlt} />
-                                            <input
-                                                type="number"
-                                                name="contactNumber"
-                                                placeholder="Enter Contact Number"
-                                            // onChange={handleChange}
-                                            // value={values.contactNumber}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-container">
-                                        <div className="input">
-                                            <FontAwesomeIcon icon={faComment} />
-                                            <input
-                                                type="text"
-                                                name="message"
-                                                placeholder="Enter Message"
-                                            // onChange={handleChange}
-                                            // value={values.contactNumber}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="input-submit">
-                                        <Button className="submit-button" type="Submit">Send To Mail</Button>
-                                    </div>
+                                    <span > Or click on this Link <a href="https://plutustec.com/contact-us" target="_blank"> <b>Contact-us</b> </a>for fill contact page</span>
                                 </form>
                                 {/* <div>
                    New User? <Link to="/register">Create Account</Link>

@@ -15,17 +15,17 @@ function App() {
     <BrowserRouter>
       <>
         <div className="app-container">
-          {/* <div className="nav-bar">
+          <div className="nav-bar">
             <NavigationBar />
-          </div> */}
+          </div>
           <div className="content">
             <ToastContainer />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<ClientForm />} />
               <Route path="/chat" element={<Chats />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/form" element={<ClientForm/>} />
+              <Route path="/home" element={<Home/>} />
               <Route path="/client-chat" element={<ClientChatConatainer/>} />
               <Route path="/contact" element={<ContactAS/>} />
             </Routes>
