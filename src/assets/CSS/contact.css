@@ -55,10 +55,11 @@
   font-size: small;
   color: white !important;
   border-radius: 50%;
-  background-color:  #ff6c37 ;
+  background-color:  #BBE3FF ;
 }
 .contact-conainer .searchContainer {
   position: relative;
+  margin: 0px 5px;
 }
 .contact-conainer .searchContainer .icon-search {
   position: absolute;

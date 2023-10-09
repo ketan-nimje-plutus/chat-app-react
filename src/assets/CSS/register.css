@@ -13,6 +13,17 @@
 .main-contact-form{
   align-items: center !important;
 }
+@media (max-width:467) {
+  .main-contact-form{
+    height: 100% !important;
+    overflow-y: scroll !important;
+  }
+}
+@media (max-width:768px) {
+  .form-text-register{
+    width: 300px;
+  }
+}
 .form-text-register{
   text-align: center;
 }
@@ -69,3 +80,4 @@ input {
   padding: 25px;
 
 }
+

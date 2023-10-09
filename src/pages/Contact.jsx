@@ -1,219 +1,4 @@
 
-// import { useEffect } from "react";
-// import noDP from "../../public/noDP.jpg";
-// import "../assets/CSS/contact.css";
-// import { useState } from "react";
-// import { useSelector } from "react-redux";
-// import { socket } from "../socket";
-// import { postdata } from "../Utils/http.class";
-// import { errorToast } from "../Components/Toast";
-// import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// let userList = [];
-// function Contact({ handleCurrentChat, contact, currentUser, setOnlineUser, onlineUser, chatMsgData }) {
-//   const [search, setSearch] = useState("");
-//   const [searchData, setSearchData] = useState([]);
-//   // const [onlineUser, setOnlineUser] = useState([]);
-//   // console.log(onlineUser,'onlineUser11')
-//   const { user } = useSelector((state) => state.auth);
-//   const [currentChat, setCurrentChat] = useState();
-//   const [notification, setNotification] = useState([]);
-//   userList = contact?.filter((data) => data._id !== currentUser.id);
-//   const [searchLoader, setSearchLoader] = useState(false);
-
-//   //online user
-//   console.log(chatMsgData, 'chatMsgData')
-//   useEffect(() => {
-//     if (socket) {
-//       socket.on("online-user", (data) => {
-//         data.forEach((element) => {
-//           let index = userList?.findIndex((item) => item._id == element.userID);
-//           if (index >= 0) {
-//             userList[index].socketid = data.socketId;
-//           }
-//         });
-//         setOnlineUser(data);
-//       });
-//     }
-//   }, [socket, userList]);
-
-//   //fileter message notification
-//   const userNotification = (user) => {
-//     let filterData;
-//     if (notification) {
-//       filterData =
-//         notification &&
-//         notification?.filter((note) => {
-//           localStorage.setItem("newMessage", JSON.stringify(note))
-//           return note?.from === user?._id;
-//         });
-//     } else {
-//       filterData = null;
-//     }
-//     return filterData;
-//   };
-
-//   userList = contact?.filter((data) => data._id !== currentUser.id);
-
-//   const newMessage = JSON.parse(localStorage.getItem("newMessage"));
-//   if (newMessage) {
-//     const userWithNewMessage = userList?.find((user) => user._id === newMessage.from);
-//     if (userWithNewMessage) {
-//       userList = userList.filter((user) => user._id !== userWithNewMessage._id);
-//       userList.unshift(userWithNewMessage);
-//     }
-//   }
-//   //get unseen message
-//   const viewMessage = async () => {
-//     const data = {
-//       to: currentUser.id,
-//     };
-//     const res = await postdata("message/isViewMessage", data);
-//     const response = await res.json();
-//     if (response.message == "You are Not verifed") {
-//       errorToast(response.message);
-//     }
-//     setNotification(response.message);
-//   };
-
-//   //change status of message seen or unseen
-//   const changeStatus = async () => {
-//     const data = {
-//       to: currentUser.id,
-//       from: currentChat?._id,
-//     };
-
-//     const res = await postdata("message/changeStatus", data);
-//     const response = await res.json();
-//     if (response.message == "You are Not verifed") {
-//       errorToast(response.message);
-//     }
-//   };
-//   const searchUser = async () => { 
-//     const data = {
-//       search: search,
-//     };
-//     const res = await postdata("user/searchUser", data);
-//     const response = await res.json();
-//     if (response) {
-//       setSearchData(response.user);
-//       setSearchLoader(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     viewMessage();
-//     changeStatus();
-//   }, [currentChat]);
-
-//   useEffect(() => {
-//     viewMessage();
-//   }, []);
-
-//   useEffect(() => {
-//     searchUser();
-//   }, [search]);
-
-//   useEffect(() => {
-//     socket.on("msg-notification", () => {
-//       viewMessage();
-//     });
-//   }, []);
-
-
-
-//   return (
-//     <>
-//       <div className="contact-conainer">
-//         <div className="searchContainer">
-//           <FontAwesomeIcon className="icon-search" icon={faMagnifyingGlass} />
-//           <input
-//             className="search-input"
-//             placeholder="search here.."
-//             type="text"
-//             onChange={(e) => {
-//               setSearchLoader(true);
-//               setSearch(e.target.value);
-//             }}
-//           />
-//           {searchLoader ? (
-//             <div className="loader-line"></div>
-//           ) : (
-//             <div style={{ height: "4px" }}></div>
-//           )}
-//         </div>
-//         {search == ""
-//           ? userList?.map((data, index) => {
-//             const isOnline = onlineUser?.some(
-//               (user) => user?.userID === data?._id
-//             );
-//             const userNote = userNotification(data);
-//             return (
-//               <div
-//                 key={index}
-//                 className={
-//                   currentChat?.name === data.name
-//                     ? "wrapper selected-contact-name "
-//                     : "wrapper"
-//                 }
-//                 onClick={() => {
-//                   handleCurrentChat(data);
-//                   setCurrentChat(data);
-//                 }}
-//               >
-//                 <div className="contact-img">
-//                   <img className="img" src={noDP} alt=" " />
-//                   {isOnline ? <div className="online"></div> : null}
-//                 </div>
-//                 <div className="contact-name">{data?.name}</div>
-//                 {currentChat?._id === data?._id
-//                   ? " "
-//                   : userNote.length > 0 && (
-//                     <div className="notification">{userNote.length}</div>
-//                   )}
-//               </div>
-//             );
-//           })
-//           : searchData?.map((data, index) => {
-//             const isOnline = onlineUser?.some(
-//               (user) => user?.userID === data?._id
-//             );
-//             const userNote = userNotification(data);
-//             return (
-//               <div
-//                 key={index}
-//                 className="wrapper"
-//                 onClick={() => {
-//                   handleCurrentChat(data);
-//                   setCurrentChat(data);
-//                 }}
-//               >
-//                 <div className="contact-img">
-//                   <img className="img" src={noDP} alt=" " />
-
-//                   {isOnline ? <div className="online"></div> : null}
-//                 </div>
-//                 <div className="contact-name"> 
-//                   <p style={{ color: "black" }}>{data?.name}</p>
-//                 </div>
-
-//                 {currentChat?._id === data?._id
-//                   ? " "
-//                   : userNote.length > 0 && (
-//                     <>
-//                       <div className="notification">{userNote.length}</div>
-//                     </>
-//                   )}
-//               </div>
-//             );
-//           })}
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Contact;
-
 import { useEffect } from "react";
 import noDP from "../../public/noDP.jpg";
 import "../assets/CSS/contact.css";
@@ -229,7 +14,7 @@ import moment from "moment";
 let userList = [];
 // ... (previous imports and code)
 
-function Contact({ handleCurrentChat, contact, currentUser, setOnlineUser, onlineUser, chatMsgData }) {
+function Contact({ handleCurrentChat, contact, currentUser, setOnlineUser, onlineUser, chatMsgData,handleShow }) {
   const [search, setSearch] = useState("");
   const [searchData, setSearchData] = useState([]);
   const { user } = useSelector((state) => state.auth);
@@ -237,7 +22,7 @@ function Contact({ handleCurrentChat, contact, currentUser, setOnlineUser, onlin
   const [notification, setNotification] = useState([]);
   userList = contact?.filter((data) => data._id !== currentUser.id);
   const [searchLoader, setSearchLoader] = useState(false);
-console.log(userList,'userList')
+  console.log(userList,'userList')
   // Function to get the last message for a user
   const getLastMessage = (userId) => {
     const userMessages = chatMsgData?.filter((msg) => msg.from === userId || msg.to === userId);
@@ -301,7 +86,7 @@ console.log(userList,'userList')
       userList = userList.filter((user) => user._id !== userWithNewMessage._id);
       userList.unshift(userWithNewMessage);
     }
-  }
+  }  
 
   //get unseen message
   const viewMessage = async () => {
@@ -402,6 +187,7 @@ console.log(userList,'userList')
                 onClick={() => {
                   handleCurrentChat(data);
                   setCurrentChat(data);
+                  handleShow()
                 }}
               >
                 <div className="contact-img">
@@ -414,12 +200,6 @@ console.log(userList,'userList')
                   : userNote.length > 0 && (
                     <div className="notification">{userNote.length}</div>
                   )}
-
-                {lastMessage && (
-                  <div className="last-message">
-                    {senderUsername}: {lastMessage.message}
-                  </div>
-                )}
               </div>
             );
           })
@@ -456,12 +236,6 @@ console.log(userList,'userList')
                       <div className="notification">{userNote.length}</div>
                     </>
                   )}
-
-                {lastMessage && (
-                  <div className="last-message">
-                    {senderUsername}: {lastMessage.message}
-                  </div>
-                )}
               </div>
             );
           })}

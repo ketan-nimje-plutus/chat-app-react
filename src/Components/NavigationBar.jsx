@@ -29,7 +29,9 @@ function NavigationBar() {
       <Container fluid>
         <Link to="/chat">
           {" "}
-          <img src={logo} width="100"></img>
+          {/* <img src={logo} width="100"></img>
+           */}
+           <p className="header-title">Plutus Chat</p>
         </Link>
         {!isLoggin ? (
           <>

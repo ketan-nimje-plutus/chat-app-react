@@ -19,7 +19,6 @@ import xls from "../../public/xls.png";
 let userList = [];
 
 function ClientChatConatainer() {
-
     const [message, setMessage] = useState([]);
     const [BD, setBD] = useState([]);
     const [getMsg, setGetMsg] = useState();
@@ -78,8 +77,6 @@ function ClientChatConatainer() {
         }
     }, [socket, userList]);
 
-
-    //handle msg(database,socket,and frontend)
     const handleSendChat = async (msg, type) => {
         const data = {
             from: currentUser,
@@ -138,7 +135,6 @@ function ClientChatConatainer() {
         setLoadding(false);
     };
 
-    //change message status seen or unseen
     const changeStatus = async () => {
         const data = {
             to: currentUser,
@@ -187,6 +183,7 @@ function ClientChatConatainer() {
             });
         }
     }, []);
+    
     useEffect(() => {
         {
             getMsg && setMessage([...message, getMsg]);
@@ -227,9 +224,11 @@ function ClientChatConatainer() {
                 </div>
                 <div id="scrollTop" className="messages-container" ref={scroll}>
                     {message.length > 10 && (
-                        <button className="view-more-button" onClick={() => viewMore()}>
+                        <div className="view-btn">
+                            <button className="view-more-button" onClick={() => viewMore()}>
                             View more
                         </button>
+                        </div>
                     )}
                     {loadding ? (
                         <div className="loader-container">
@@ -246,14 +245,6 @@ function ClientChatConatainer() {
                                         data.fromSelf ? "messages-send" : "messages-rececive"
                                     }
                                 >
-                                    {/* {data.message && (
-                                        <>
-                                            <p className={data.fromSelf ? "sender-msg" : "receiver-msg"}>
-                                                {data.message}
-                                            </p>
-
-                                        </>
-                                    )} */}
                                     {data.message && (
                                         <>
                                             <div className={data.fromSelf ? "your-message" : "chat-msg-data"}>
@@ -366,12 +357,6 @@ function ClientChatConatainer() {
                                                 }}
                                             />
                                         ))}
-
-                                    <span className="time">
-                                        {moment(
-                                            data.createdAt ? data.createdAt : new Date()
-                                        ).format("h:mm: a")}
-                                    </span>
                                 </div>
                             );
                         })
@@ -386,15 +371,23 @@ function ClientChatConatainer() {
                     ) : null}
                     <div ref={scroll}></div>
                 </div>
-                <div className="chat-send-msg-input">
-                <div className="type"></div>
+                {/* <div className="chat-send-msg-input">
                 <div className="chat-input">
                     <ChatInput
                         handleSendChat={handleSendChat}
                         handleSendImage={handleSendImage}
                     />
                 </div>
+            </div> */}
             </div>
+            <div className="chat-send-msg-input">
+                {/* <div className="type"></div> */}
+                <div className="chat-input">
+                    <ChatInput
+                        handleSendChat={handleSendChat}
+                        handleSendImage={handleSendImage}
+                    />
+                </div>
             </div>
         </>
     );

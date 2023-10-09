@@ -13,12 +13,13 @@ import doc from "../../public/doc.png";
 import xls from "../../public/xls.png";
 import ChatInput from "./ChatInput";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faEllipsisV, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 
 let userList = [];
 
-function ChatContainer({ currentChat, currentUser, onlineUser, setChatMsgData }) {
+function ChatContainer({ currentChat, currentUser, onlineUser, setChatMsgData, handlehide , setShowChat }) {
+  console.log(handlehide,'handlehide')
   console.log(onlineUser, 'onlineUseronlineUserchat')
   const [message, setMessage] = useState([]);
   const [getMsg, setGetMsg] = useState();
@@ -30,6 +31,10 @@ function ChatContainer({ currentChat, currentUser, onlineUser, setChatMsgData })
   const [chatGptImg, setChatGptImg] = useState(false);
   const msgBox = document.getElementById("scrollTop");
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const isMobile = width >= 768;
+
+  console.log(isMobile, 'isMobile')
   //handle msg(database,socket,and fronte nd)
   const handleSendChat = async (msg, type) => {
     const data = {
@@ -115,9 +120,9 @@ function ChatContainer({ currentChat, currentUser, onlineUser, setChatMsgData })
     };
   }, []);
 
-useEffect(()=>{
-  setChatMsgData(message)
-},[message])
+  useEffect(() => {
+    setChatMsgData(message)
+  }, [message])
 
   useEffect(() => {
     if (socket) {
@@ -180,39 +185,45 @@ useEffect(()=>{
     <>
       {/* <ToastContainer /> */}
       <div className="chat-container">
-        <div className="user-container">
-          <div className="user-status">
-            {isCurrentUserOnline ?
-              <div className="user-profile">
-                <div className="online-user">
-                  <img className="profile-img" src={noDP} alt=" "></img>
-                  <div className="online"></div>
-                </div>
-                <div>
-                  <div> {currentChat?.name}</div>
-                  <div className="user-status">Active now</div></div>
-              </div>
-              :
-              <div className="user-profile">
-                <div className="online-user">
-                  <img className="profile-img" src={noDP} alt=" "></img>
-                </div>
-                <div>
-                  <div> {currentChat?.name}</div>
-                  <div className="user-status">Offline</div></div>
-              </div>
-            }
-          </div>
-
-
-
-          <div className="search-user-msg">
-            <div className="icon-color">
-              <FontAwesomeIcon icon={faSearch} />
+        <div className="back-chat-icon">
+          {!isMobile ? (
+            <div className="back-icon" onClick={() =>  handlehide()}>
+              <FontAwesomeIcon icon={faArrowLeft} />
             </div>
-            <div className="icon-color">
-              <FontAwesomeIcon icon={faEllipsisV} />
+          ) : null}
+          <div className="user-container">
+
+            <div className="user-status">
+              {isCurrentUserOnline ?
+                <div className="user-profile">
+                  <div className="online-user">
+                    <img className="profile-img" src={noDP} alt=" "></img>
+                    <div className="online"></div>
+                  </div>
+                  <div>
+                    <div> {currentChat?.name}</div>
+                    <div className="user-status">Active now</div></div>
+                </div>
+                :
+                <div className="user-profile">
+                  <div className="online-user">
+                    <img className="profile-img" src={noDP} alt=" "></img>
+                  </div>
+                  <div>
+                    <div> {currentChat?.name}</div>
+                    <div className="user-status">Offline</div></div>
+                </div>
+              }
             </div>
+            <div className="search-user-msg">
+              <div className="icon-color">
+                <FontAwesomeIcon icon={faSearch} />
+              </div>
+              <div className="icon-color">
+                <FontAwesomeIcon icon={faEllipsisV} />
+              </div>
+            </div>
+
           </div>
         </div>
         <div id="scrollTop" className="messages-container" ref={scroll}>
@@ -358,16 +369,15 @@ useEffect(()=>{
           ) : null}
           <div ref={scroll}></div>
         </div>
-
-       <div className="chat-send-msg-input">
-       <div className="type"></div>
+      </div>
+      <div className="chat-send-msg-input">
+        {/* <div className="type"></div> */}
         <div className="chat-input">
           <ChatInput
             handleSendChat={handleSendChat}
             handleSendImage={handleSendImage}
           />
         </div>
-       </div>
       </div>
     </>
   );

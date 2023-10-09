@@ -37,7 +37,7 @@ function Register() {
         {/* <Col md={6}>
           <img src={login} className="w-100" />
         </Col> */}
-        <Col md={12}>
+        <Col md={12} className="p-0">
           <div className="register-form ">
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>

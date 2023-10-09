@@ -160,7 +160,6 @@ function ChatInput({ handleSendChat, handleSendImage }) {
 
           </div>
         </form>
-        <div></div>
       </div>
     </>
   );
